@@ -1,9 +1,9 @@
-export const paridad = (numero)=>{
-   if (typeof numero!="number"){
+export const paridad = (number)=>{
+   if (typeof number!="number"){
        return "debes introducir numeros"
    }
    else{
-     return (numero % 2 == 0)
+     return (number % 2 == 0)
         ? "es par"
         : "es impar"
     }
