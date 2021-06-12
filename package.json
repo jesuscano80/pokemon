@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --config=webpack.dev.js",
     "build": "webpack --config=webpack.prod.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --env=jsdom",
     "lint": "semistandard --fix",
     "prepare": "husky install"
   },
@@ -18,7 +18,10 @@
   "jest": {
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(lit-element|lit-html|lit|@lit/reactive-element)/)"
+    ]
   },
   "semistandard": {
     "globals": [
@@ -59,6 +62,10 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "@vaadin/router": "^1.7.4",
+    "axios": "^0.21.1",
+    "genk-poc-jesus": "^0.0.0",
+    "heart-comp": "^0.0.3",
+    "lit": "^2.0.0-rc.2"
   }
 }

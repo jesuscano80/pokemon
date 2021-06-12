@@ -1,3 +1,43 @@
-body{
-    background-color: red;
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
 }
+
+:root{
+    --color-poc:yellow;
+    --heart-comp-text-back:rgb(1,1,1,0.1);
+    --heart-comp-like-back:rgba(201,65,98,1);
+    --holy-content-background-color:white;
+    --color-normal:rgb(168,160,144);
+    --color-fighting:rgb(160,80,56);
+    --color-flying:rgb(152,168,240);
+    --color-poison:rgb(176,88,160);
+    --color-ground:rgb(234,214,164);
+    --color-rock:rgb(184,160,88);
+    --color-bug:rgb(168,184,32);
+    --color-ghost:rgb(96,96,176);
+    --color-steel:rgb(168,168,192);
+    --color-fire:rgb(240,80,48);
+    --color-water:rgb(56,153,248);
+    --color-grass:rgb(120,200,80);
+    --color-electric:rgb(248,208,48);
+    --color-psychic:rgb(248,112,160);
+    --color-ice:rgb(88,200,224);
+    --color-dragon:rgb(160,80,56);
+    --color-dark:rgb(122,88,72);
+    --color-fairy:rgb(231,159,231);
+    --color-unknown:rgb(176,88,160);
+    --color-shadow:rgb(66,66,66);
+    
+}
+main{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+genk-posts::part(hello){
+    color:pink;
+}
+
+

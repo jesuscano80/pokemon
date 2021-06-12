@@ -4,9 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanilla</title>
+    <title>Pokemon Gen-K</title>
+    <link rel="icon" href="favicon.ico?v=2" type="image/x-icon" />
 </head>
 <body>
-    <h1>Vanilla</h1>
+   
+    
+
+    <holy-layout>
+        <h2 slot="header">Pokemon</h2>
+        <nav slot="nav">
+            <a href="/">Home</a>
+            <a href="/post">Post</a>
+            <a href="/desc">Descarga</a>
+        </nav>
+        <div slot="aside">
+            <heart-comp></heart-comp>
+            <genk-poc></genk-poc>
+        </div>
+        <main slot="section" id="outlet"></main>
+        <div slot="footer">Este es el footer</div>
+
+    </holy-layout>
 </body>
 </html>
