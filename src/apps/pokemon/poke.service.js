@@ -8,5 +8,7 @@ export class PokeService{
         const list= await this.service.getAllPokemon();
        return await this.service.getAllPokemonData(list);
     }
-   
+
+    
+
 }

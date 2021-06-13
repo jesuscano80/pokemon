@@ -1,9 +1,34 @@
-export class PostPage extends HTMLElement{
+import { LitElement,css, html } from "lit";
+
+export class PostPage extends LitElement{
     constructor(){
         super();
          }
+    static get style(){
+        return css `
+                :host {
+                    background: red;
+                }
+                *{
+                    box-sizing:border-box;
+                    padding:0;
+                    margin:0;
+                    }
+                section {
+                    display: flex;
+                    flex-direction: column;
+                };
+                `
+    }
+    render(){
+        return html`
+        <section>
+            <poke-comp></poke-comp>
+        </section>
+        `; 
+    }
     connectedCallback() {
-        this.innerHTML = `<style>poke-comp{display:grid;grid-template-columns: repeat(5, 1fr);gap:1em;};</style><poke-comp></poke-comp>`;
+       super.connectedCallback() ;
     }
 }
 window.customElements.define("post-page", PostPage);

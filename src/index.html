@@ -6,25 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Gen-K</title>
     <link rel="icon" href="favicon.ico?v=2" type="image/x-icon" />
+    <base href="/" />
 </head>
 <body>
    
     
 
-    <holy-layout>
-        <h2 slot="header">Pokemon</h2>
-        <nav slot="nav">
+    <new-layout>
+        <nav-component slot="aside"></nav-component>
+        <!-- <nav slot="aside">
+
             <a href="/">Home</a>
             <a href="/post">Post</a>
             <a href="/desc">Descarga</a>
-        </nav>
-        <div slot="aside">
-            <heart-comp></heart-comp>
-            <genk-poc></genk-poc>
-        </div>
-        <main slot="section" id="outlet"></main>
-        <div slot="footer">Este es el footer</div>
-
-    </holy-layout>
+        </nav> -->
+        <main slot="article" id="outlet">
+        </main>
+        
+    </new-layout>
+    
 </body>
 </html>
