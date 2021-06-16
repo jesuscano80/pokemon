@@ -1,0 +1,10 @@
+version: "3.7"
+    
+services:
+        webpack:
+            build: .
+            image: poke-app:1.0
+            restart: always
+            ports: 
+                - "80:80"
+            

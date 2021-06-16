@@ -29,7 +29,20 @@
     --color-fairy:rgb(231,159,231);
     --color-unknown:rgb(176,88,160);
     --color-shadow:rgb(66,66,66);
-    
+    --color-grass-p: #94f39a;
+    --color-fire-p: #af7f7f;
+    --color-water-p: #76bedf;
+    --color-bug-p: #f7b559;
+    --color-normal-p: #524c4c;
+    --color-fighting-p: #dfceae;
+    --color-poison-p: #8f8cda;
+    --color-electric-p: #f5e077;
+    --color-ground-p: #f0c091;
+    --color-fairy-p: #e7a4f3;
+    --color-psychic-p: #e3e75f;
+    --color-rock-p: #f7a9a9;
+    --color-ghost-p: #59add1;
+    --color-pink: #128924;
 }
 main{
     min-height: 100vh;

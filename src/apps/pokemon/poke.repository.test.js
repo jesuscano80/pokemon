@@ -4,6 +4,7 @@ import { EVOLUTION_CHAIN } from "../../../fixtures/evolution";
 import { POKEMON20 } from "../../../fixtures/first20Pokemon";
 import { POKEMONLISTBASIC } from "../../../fixtures/Pokemon20ListBasic";
 import { PokeAllRepository } from "./poke.repository";
+import { SPECIES} from "../../../fixtures/species"
 jest.mock("axios");
 
 
@@ -41,6 +42,14 @@ describe("test pokerepositoryAll",()=>{
         const number=  pokeAllrepo.getId("https://pokeapi.co/api/v2/evolution-chain/1/");
         const objEvolution=await pokeAllrepo.getEvolution(EVOLUTION_CHAIN);
         expect(objEvolution.data).not.toBe(EVOLUTIONPOKEMON);
+    })
+
+    test("should receive species data", async ()=>{
+        const pokeAllrepo= new PokeAllRepository();
+        pokeAllrepo.getSpeciesData=jest.fn().mockResolvedValue(SPECIES);
+        const result= await pokeAllrepo.getSpeciesData(1);
+        expect(result).toBe(SPECIES);
+        
     })
 
     

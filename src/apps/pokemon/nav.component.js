@@ -1,12 +1,16 @@
+import { Router } from "@vaadin/router";
 import { LitElement, css, html } from "lit";
 
 export class NavComponent extends LitElement {
   constructor() {
     super();
+    this.allPokemon;
+    this.value="";
+    this.pokeball;
   }
   static get properties() {
     return {
-      datatypes: { type: Object },
+      datatypes: { type: Object }
     };
   }
 
@@ -31,15 +35,20 @@ export class NavComponent extends LitElement {
         width: 100%;
         background-color: #f5fffa;
       }
-      #button {
+      select{
         outline: none;
-        border: 5px solid #f5fffa;
-        border-left: none;
+        border: 5px solid #356abc;
         height: 36.5px;
-        width: 36.5px;
-        border-radius: 0 8px 8px 0;
-        background-color: #ffcc03;
+        border-radius: 8px 0 0 8px;
+        width: 100%;
+        background-color: #f5fffa;
+        color:#696969;
       }
+      label{
+        color: #f5fffa;
+        margin-bottom: 5px;
+      }
+      
       section {
         justify-content: space-between;
         max-width: 100%;
@@ -56,6 +65,7 @@ export class NavComponent extends LitElement {
         border-radius: 50%;
         overflow: hidden;
         box-shadow: 0 0 10px 3px #f5fffa;
+        cursor: pointer;
       }
       img {
         height: 100%;
@@ -68,6 +78,7 @@ export class NavComponent extends LitElement {
         margin-left: 10px;
         width: 10%;
         height: 10%;
+        cursor: pointer;
       }
       .bug {
         background: #92bc2c;
@@ -164,58 +175,100 @@ export class NavComponent extends LitElement {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 1em;
       }
-      .tipos {
-        padding: 6px;
-        border: 1px solid black;
-        text-align: center;
+
+      .grid2{
+        
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1em;
       }
+
+      .tipos {
+        padding: 3px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #808080;
+        border-radius: 5px;
+      }
+
+      #types{
+          overflow:hidden;
+          height:0.5em;
+      }
+      .features{
+      padding: 6px;
+        text-align: center;
+      }    
+      .hidden{
+        visibility: hidden;
+      }
+      #but{
+        padding-left: 10px;
+        cursor: pointer;
+      }
+      #but:hover{
+        transform: scale(1.5);
+      }
+     
     `;
   }
 
   render() {
     return html`<section>
       <div class="logo">
-        <img
+        <img 
+          @click=${this.goHome}
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/320px-International_Pok%C3%A9mon_logo.svg.png"
         />
       </div>
-      <select id="sel" @change=${(e) => this.eventGenerator()}>
-        <option value="selected">Choose type of Pokemon</option>
-
-        ${this.datatypes?.map(
-          (e) => html`<option>${e.data.types[0].type.name}</option>`
-        )}
-      </select>
-      <p>Choose type of Pokemon</p>
-      <form>
-        <!-- <input list="types" type="text" >
-                     <datalist id="types">
-                         <option value="pikachu"></option>
-                         <option value="squirtel"></option>
-                     </datalist> -->
-
+  
+      <form onSubmit="return false;">
+        <label for="byname">Search by name
+              <input id="byname" list="types" @change="${e => this.value = e.target.value}" size="5" type="text" .value=${this.value} placeholder="e.g. Pikachu" minlength="2" autofocus autocomplete="off">
+              <datalist id="types">
+                ${this.allPokemon?.map(
+                (e) => html`<option>${e.data.name}</option>`
+                )}
+              </datalist>
+        </label>
+ 
+        <img id="but" @click=${this.checkInput} src="https://fontmeme.com/permalink/210615/1525a15545dc148e015d7c55a56971b3.png">
+        </form>
+        <form id="elselect" onSubmit="return false;">
+         <label>Search by Pokemon type
+          <select @change="${(e) => this.eventGenerator(e.target.value)}">
+            <option selected>Choose one</option>
+            ${this.datatypes?.map(
+                    (e) =>
+                      html` <option type="button"
+                            class="optioncolor ${e.data.types[0].type.name}"
+                            >
+                            ${e.data.types[0].type.name}
+                            </option>`
+                  )}
+          </select>
+          </label>
+    </form>
+    <div class="container">     
+                   
+      <!-- <p>Choose type of Pokemon</p>
+      <form onSubmit="return false;">
         <div class="grid">
           ${this.datatypes?.map(
             (e) =>
-              html` <div
+              html` <button type="button"
                     class="tipos ${e.data.types[0].type.name}"
                     @click=${() => this.eventGenerator(e.data.types[0].type.name)}
                     >
                     ${e.data.types[0].type.name}
-                    </div>`
+                    </button>`
           )}
         </div>
-
-        <!-- <button type="submit" id="button"> -->
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" stroke="#356abc" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                         <path stroke="none" d="M0 0h24v24H0z"/>
-                         <circle cx="10" cy="10" r="7"/>
-                         <line x1="21" y1="21" x2="15" y2="15"/>
-                         </svg>
-                     </button> -->
-      </form>
-      Filter by features
-      <div class="grid">
+        
+      </form> -->
+      
+    <label>Filter by features
+      <div class="grid2">
         <div class="tipos" @click="${() => this.eventGenerator("maxpower")}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -273,9 +326,9 @@ export class NavComponent extends LitElement {
             />
           </svg>
         </div>
-        <div class="tipos">exp</div>
-        <div class="tipos">height</div>
-        <div class="tipos">weight</div>
+        <div class="features">exp</div>
+        <div class="features">height</div>
+        <div class="features">weight</div>
         <div class="tipos" @click="${() => this.eventGenerator("lesspower")}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -334,29 +387,86 @@ export class NavComponent extends LitElement {
           </svg>
         </div>
       </div>
-      <div class="img">
+    </label>
+    </div>  
+    
+      <div class="img" @click=${this.toPokeball}>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png"
         />
       </div>
-    </section>`;
+    </section>
+   `;
   }
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener("datatypes", (e) => {
       this.datatypes = e.detail.data;
-      
+      this.allPokemon = e.detail.all;
+      console.log(this.allPokemon);
     });
+    document.addEventListener("hideButtons",(e)=>{
+      this.hideButtons();
+    });
+    document.addEventListener("showButtons",(e)=>{
+      this.showButtons();
+    });
+ 
   }
-  eventGenerator(param) {
+  eventGenerator(param, param2) {
     const message = new CustomEvent(param, {
       bubbles: true,
       composed: true,
       detail: {
-        msg: param
+        msg: param,
+        data: param2,
       },
     });
     this.dispatchEvent(message);
+    console.log("envia evento", param);
+
+  }
+  checkInput(){
+      this.value=this.value.toLowerCase();
+    const found = this.allPokemon.find(element => element.data.name == this.value);
+    if (found!=undefined){
+        console.log("lo ha encontrado")
+
+        console.log(found.data.id);
+        const id=found.data.id;
+        Router.go(`/info/${id}`);
+        this.hideButtons();
+    }
+    else{
+        console.log("no lo ha encontrado");
+        setTimeout(()=>{this.shadowRoot.querySelector("input").value="";},1200);
+        this.shadowRoot.querySelector("input").value="I didn´t find it";
+    }
+    
+  }
+  goHome(){
+      Router.go("/post");
+      this.showButtons();
+  }
+
+  hideButtons(){
+    const container=this.shadowRoot.querySelector(".container");
+    const select=this.shadowRoot.querySelector("#elselect");
+    select.classList.add("hidden");
+    container.classList.add("hidden");
+  }
+
+  showButtons(){
+    const container=this.shadowRoot.querySelector(".container");
+    const select=this.shadowRoot.querySelector("#elselect");
+    select.classList.remove("hidden");
+    container.classList.remove("hidden");
+  }
+
+  toPokeball(){
+    Router.go("/pokeball");
+    this.hideButtons();
+   
   }
   
 }

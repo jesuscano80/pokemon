@@ -6,6 +6,7 @@ router.setRoutes([
 { path:"/", component: "home-page"},
 { path: "/post", component: "poke-comp"},
 { path: "/desc", component: "descarga-comp"},
-{ path: "/info/:params", component: "info-comp" },
+{ path: "/info/:id", component: "evolution-comp" },
+{ path: "/pokeball", component: "pokeball-comp"},
 { path:"(.*)", component: "home-page"}
 ])

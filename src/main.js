@@ -11,5 +11,7 @@ import "heart-comp/heart-comp"
 import "./apps/pokemon/poke.component"
 import "./apps/layouts/new.layout"
 import "./apps/pokemon/nav.component"
+import "./apps/pokemon/evolution.component"
+import "./apps/pokemon/pokeball.component"
 
 import "./router";

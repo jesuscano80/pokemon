@@ -1,5 +1,5 @@
+import { Router } from "@vaadin/router";
 import { LitElement, html, css } from "lit";
-import { PokeAllRepository } from "./poke.repository";
 import { PokeService } from "./poke.service";
 
 
@@ -9,7 +9,11 @@ export class PokeComponent extends LitElement{
     constructor(){
         super();
         this.service= new PokeService();
-        
+        this.allPokemon;
+        this.allPokemonOriginal;
+        this.renderComplete=false;  
+        this.pokeball=[];
+        this.pokemonInsidePokeball;
       
   }
       
@@ -37,6 +41,14 @@ export class PokeComponent extends LitElement{
             border-radius:5px;
             box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);                
         }
+        .loading{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height: 100vh; 
+            width:140%; 
+            cursor: wait; 
+        }
         .bannercolor{
             display:flex;
             justify-content:flex-end;
@@ -52,22 +64,36 @@ export class PokeComponent extends LitElement{
             display:flex;
             flex-direction: column;
             height:calc(100% - 70px);
+            cursor: pointer;
+        }
+        heart-comp{
+            cursor: pointer;
         }    
         .div-image{
             display:flex;
             justify-content:center;
             border-radius:50px;
-            width:96px;
+            width:100px;
             background-color: white;
             overflow: hidden;
             margin:0 auto;
         }
         .card-image{
             background: rgba(1,1,1,0.1);
+            border-radius:50px;
+            padding: 7px;
+           
+        }
+        .hidden{
+        display:none;
+        }
+        .card-image:hover{
+            transform: scale(1.2)
         }
         .pokemon-name{
             padding: 10px 0;
             font-size:1.5em;
+            
         }
         .card-bottom-tittle{
             display:grid;
@@ -94,6 +120,10 @@ export class PokeComponent extends LitElement{
         }
         .exp, .hei, .wei{
             font-size:0.8em;
+        }
+        .pokeball{
+            cursor: pointer;
+            width:20px;
         }
         .bug {
     background: #92BC2C;
@@ -184,6 +214,8 @@ export class PokeComponent extends LitElement{
     background: #539DDF;
     box-shadow: 0 0 20px #539DDF;
 }
+
+
 @media screen and (max-width:768px){
     :host{
             width:100%;
@@ -204,50 +236,56 @@ export class PokeComponent extends LitElement{
     static get properties(){
         return{
     allPokemon: {type: Object},
-    allPokemonOriginal: {type: Object} 
+    renderComplete: {type: Boolean} 
         }
     }
 
    
 
     render()
-    {  
-        return html`${this.allPokemon && this.allPokemon.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
-        <article class="card">
-            <div class="bannercolor type-${pokemon.data.id}"><heart-comp></heart-comp></div>
-            <div class="card-body">
-                <div class="div-image">
-                    <img class="card-image" src=${pokemon.data.sprites.front_default} alt="">
-                </div>
-                    <p class="pokemon-name" id="${pokemon.data.id}" @click=${()=>this.evolution(pokemon.data.id)}>${this.capitalize(pokemon.data.name)}</p><span></span>
-                <div class="divIcon">
-                    <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
-                </div>
-                <div class="card-bottom-tittle">
-                    <div class="exp">exp</div>
-                    <div class="hei">height</div>
-                    <div class="wei">weight</div>
-                    <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
-                    <div class="hei"><b>${pokemon.data.height}m</b></div>
-                    <div class="wei"><b>${pokemon.data.weight}kg</b></div>
-                </div> 
-            </div>
-        </article>`)}` 
+    {  return this.renderComplete 
+            ? html`${this.allPokemon && this.allPokemon.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+                <article class="card">
+                    <div class="bannercolor type-${pokemon.data.id}">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" @click=${()=>this.toPokeball(pokemon.data.id)}>
+                        <heart-comp></heart-comp>
+                    </div>
+                    <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
+                        <div class="div-image">
+                        <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
+                        <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
+                        <div class="divIcon">
+                            <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
+                        </div>
+                        <div class="card-bottom-tittle">
+                            <div class="exp">exp</div>
+                            <div class="hei">height</div>
+                            <div class="wei">weight</div>
+                            <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
+                            <div class="hei"><b>${pokemon.data.height}m</b></div>
+                            <div class="wei"><b>${pokemon.data.weight}kg</b></div>
+                        </div> 
+                    </div>
+                </article> `)}`
+                : html `<div class="loading">
+                            <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
+                        </div>` 
     }
 
     async connectedCallback(){
         super.connectedCallback();
         this.allPokemon=await this.service.get20Pokemon();
-        this.allPokemonOriginal=[...this.allPokemon]
-        this.generateDocumentAddListeners()
+        this.generateDocumentAddListeners();
         this.dataTypesFiltered=this.allPokemon.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
-        this.eventGenerator("datatypes",this.dataTypesFiltered);
         this.generateAddEvent(this.dataTypesFiltered);
-        this.capitalize= (name)=>{
-            return  name[0].toUpperCase() + name.slice(1);
-          }
-        
+        this.allPokemonOriginal=[...this.allPokemon];
+        this.eventGenerator("datatypes",this.dataTypesFiltered, this.allPokemon);
+        this.renderComplete=true;    
+       
     }
+
+   
+         
 
 getLessPower(){
         
@@ -356,18 +394,20 @@ generateDocumentAddListeners(){
     });
    
 }
-    eventGenerator(param, datasend){
+    eventGenerator(param, datasend, allpoke){
+        
         const message = new CustomEvent(param, {
             bubbles: true,
             composed: true,
             detail: {
             msg: param,
-            data: datasend
+            data: datasend,
+            all: allpoke,
             }
             })
             this.dispatchEvent(message);
             
-
+            console.log("envia evento", param);
     }
     generateAddEvent(param){
         
@@ -382,6 +422,37 @@ generateDocumentAddListeners(){
                 
         })
 
+    }
+
+    capitalize= (name)=>{
+            return  name[0].toUpperCase() + name.slice(1);
+          }
+    sendTo(id){
+        Router.go(`/info/${id}`)
+        this.eventGenerator("hideButtons");
+    }
+
+    toPokeball(id){
+        if (localStorage.getItem("pokeInside")){
+            const data=JSON.parse(localStorage.getItem("pokeInside"));
+            data.forEach((elem)=>{
+                this.pokeball.push(elem);
+            })
+            
+            this.pokeball.push(id);
+            localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
+        }
+        else{
+            this.pokeball.push(id);
+            localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
+        }
+        
+        const pokeballSelected=this.shadowRoot.querySelector(`.pokeball-${id}`);
+        pokeballSelected.classList.add("hidden");
+        const pokemonSelected=this.shadowRoot.querySelector(`.image-flying-${id}`)
+        pokemonSelected.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png");
+        this.pokemonInsidePokeball= this.allPokemon.filter((elem)=> this.pokeball.includes(elem.data.id));
+        
     }
 }
 

@@ -9,6 +9,13 @@ export class PokeService{
        return await this.service.getAllPokemonData(list);
     }
 
-    
+    async getEvolutionChain(param){
+        return this.service.getEvolutionChain(param);
+    }
+
+    async getSpeciesData(pokeid){
+      return this.service.getSpeciesData(pokeid);
+    }
+
 
 }
