@@ -9,8 +9,11 @@ export class PokeComponent extends LitElement{
     constructor(){
         super();
         this.service= new PokeService();
+        
       
-    }
+  }
+      
+    
 
     static get styles(){
         return css`
@@ -200,13 +203,16 @@ export class PokeComponent extends LitElement{
 
     static get properties(){
         return{
-        todos: {type: Object}
+    allPokemon: {type: Object},
+    allPokemonOriginal: {type: Object} 
         }
     }
 
+   
+
     render()
     {  
-        return html`${this.todos && this.todos.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+        return html`${this.allPokemon && this.allPokemon.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
         <article class="card">
             <div class="bannercolor type-${pokemon.data.id}"><heart-comp></heart-comp></div>
             <div class="card-body">
@@ -231,29 +237,21 @@ export class PokeComponent extends LitElement{
 
     async connectedCallback(){
         super.connectedCallback();
-        this.todos=await this.service.get20Pokemon();
-        document.addEventListener("lesspower", (e) => {
-            console.log(e.detail.msg);
-            this.getLessPower(); 
-            
-            });
-    
-        document.addEventListener("maxpower", (e) => {
-        console.log(e.detail.msg);
-        this.getMaxPower(); 
-        });
-     
-
+        this.allPokemon=await this.service.get20Pokemon();
+        this.allPokemonOriginal=[...this.allPokemon]
+        this.generateDocumentAddListeners()
+        this.dataTypesFiltered=this.allPokemon.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
+        this.eventGenerator("datatypes",this.dataTypesFiltered);
+        this.generateAddEvent(this.dataTypesFiltered);
         this.capitalize= (name)=>{
             return  name[0].toUpperCase() + name.slice(1);
           }
         
     }
-  
 
 getLessPower(){
         
-    this.todos.sort(function(a, b) {
+    this.allPokemon.sort(function(a, b) {
         if (a.data.base_experince > b.data.base_experience) {
             return 1;
         }
@@ -262,11 +260,11 @@ getLessPower(){
         }
         return 0;
     });
-    this.todos=[...this.todos];
+    this.allPokemon=[...this.allPokemon];
 }
 
 getMaxPower(){
-    this.todos.sort(function(a, b) {
+    this.allPokemon.sort(function(a, b) {
         if (a.data.base_experince < b.data.base_experience) {
             return 1;
         }
@@ -275,9 +273,116 @@ getMaxPower(){
         }
         return 0;
     })
-    this.todos=[...this.todos];
+    this.allPokemon=[...this.allPokemon];
+}
+getLessHeight(){
+    
+    this.allPokemon.sort(function(a, b) {
+        if (a.data.height < b.data.height) {
+            return -1;
+        }
+        if (a.data.height > b.data.height) {
+            return 1
+        }
+        return 0;
+    })
+    this.allPokemon=[...this.allPokemon];
 }
 
+getMaxHeight(){
+    this.allPokemon.sort(function(a, b) {
+        if (a.data.height < b.data.height) {
+            return 1;
+        }
+        if (a.data.height > b.data.height) {
+            return -1;
+        }
+        return 0;
+    })
+    this.allPokemon=[...this.allPokemon];
+
+}
+getLessWeight(){
+    
+    this.allPokemon.sort(function(a, b) {
+        if (a.data.weight < b.data.weight) {
+            return -1;
+        }
+        if (a.data.weight > b.data.weight) {
+            return 1
+        }
+        return 0;
+    })
+    this.allPokemon=[...this.allPokemon];
+}
+
+getMaxWeight(){
+    this.allPokemon.sort(function(a, b) {
+        if (a.data.weight < b.data.weight) {
+            return 1;
+        }
+        if (a.data.weight > b.data.weight) {
+            return -1;
+        }
+        return 0;
+    })
+    this.allPokemon=[...this.allPokemon];
+
+}
+generateDocumentAddListeners(){
+    document.addEventListener("maxpower", (e) => {
+        console.log(e.detail.msg);
+        this.getMaxPower(); 
+        });
+    document.addEventListener("lesspower", (e) => {
+    console.log(e.detail.msg);
+    this.getLessPower(); 
+    });
+    document.addEventListener("lessheight", (e) => {
+    console.log(e.detail.msg);
+    this.getLessHeight(); 
+    });
+    document.addEventListener("maxheight", (e) => {
+    console.log(e.detail.msg);
+    this.getMaxHeight(); 
+    });
+    document.addEventListener("lessweight", (e) => {
+    console.log(e.detail.msg);
+    this.getLessWeight(); 
+    });
+    document.addEventListener("maxweight", (e) => {
+    console.log(e.detail.msg);
+    this.getMaxWeight(); 
+    });
+   
+}
+    eventGenerator(param, datasend){
+        const message = new CustomEvent(param, {
+            bubbles: true,
+            composed: true,
+            detail: {
+            msg: param,
+            data: datasend
+            }
+            })
+            this.dispatchEvent(message);
+            
+
+    }
+    generateAddEvent(param){
+        
+        param.forEach(elem=>{
+            const type=elem.data.types[0].type.name;
+                document.addEventListener(type, ()=>{    
+                this.allPokemon=[...this.allPokemonOriginal];
+                const filtered=this.allPokemon.filter((elem)=>elem.data.types[0].type.name==type);
+                this.allPokemon=[...filtered];
+                
+            })
+                
+        })
+
+    }
 }
 
 window.customElements.define("poke-comp",PokeComponent)
