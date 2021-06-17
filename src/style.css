@@ -48,8 +48,11 @@ main{
     min-height: 100vh;
     width: 100%;
     margin-bottom: 20px;
+    font-family:monospace;
 }
-
+nav-component{
+    font-family: monospace;
+}
 genk-posts::part(hello){
     color:pink;
 }

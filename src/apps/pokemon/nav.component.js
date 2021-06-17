@@ -20,6 +20,7 @@ export class NavComponent extends LitElement {
         box-sizing: border-box;
         padding: 0;
         margin: 0;
+        
       }
       form {
         display: flex;
@@ -34,6 +35,8 @@ export class NavComponent extends LitElement {
         border-radius: 8px 0 0 8px;
         width: 100%;
         background-color: #f5fffa;
+        caret-color: #356abc;
+        text-indent: 5px;
       }
       select{
         outline: none;
@@ -43,6 +46,7 @@ export class NavComponent extends LitElement {
         width: 100%;
         background-color: #f5fffa;
         color:#696969;
+        text-indent: 5px;
       }
       label{
         color: #f5fffa;
@@ -70,9 +74,6 @@ export class NavComponent extends LitElement {
       img {
         height: 100%;
         transform: scale(1.2);
-      }
-      svg {
-        color: red;
       }
       .logo {
         margin-left: 10px;
@@ -209,8 +210,16 @@ export class NavComponent extends LitElement {
       #but:hover{
         transform: scale(1.5);
       }
+      .multicolor{
+        background: #808080;
+        color: white;
+      }
+      .press{
+        background-color: #FFCC03;
+        
+      }
      
-    `;
+    `
   }
 
   render() {
@@ -224,11 +233,14 @@ export class NavComponent extends LitElement {
   
       <form onSubmit="return false;">
         <label for="byname">Search by name
+          
               <input id="byname" list="types" @change="${e => this.value = e.target.value}" size="5" type="text" .value=${this.value} placeholder="e.g. Pikachu" minlength="2" autofocus autocomplete="off">
-              <datalist id="types">
-                ${this.allPokemon?.map(
-                (e) => html`<option>${e.data.name}</option>`
-                )}
+
+                    
+              <datalist class="datalist" id="">
+              ${this.allPokemon?.map(
+                  (e) => html`<option>${e.data.name}</option>`
+                  )}
               </datalist>
         </label>
  
@@ -236,8 +248,9 @@ export class NavComponent extends LitElement {
         </form>
         <form id="elselect" onSubmit="return false;">
          <label>Search by Pokemon type
-          <select @change="${(e) => this.eventGenerator(e.target.value)}">
-            <option selected>Choose one</option>
+          <select @change="${(e) => this.eventGenerator(e.target.value, e, "cleanallbuttons")}">
+            <option selected>choose one</option>
+            <option class="multicolor">all types</option>
             ${this.datatypes?.map(
                     (e) =>
                       html` <option type="button"
@@ -250,26 +263,10 @@ export class NavComponent extends LitElement {
           </label>
     </form>
     <div class="container">     
-                   
-      <!-- <p>Choose type of Pokemon</p>
-      <form onSubmit="return false;">
-        <div class="grid">
-          ${this.datatypes?.map(
-            (e) =>
-              html` <button type="button"
-                    class="tipos ${e.data.types[0].type.name}"
-                    @click=${() => this.eventGenerator(e.data.types[0].type.name)}
-                    >
-                    ${e.data.types[0].type.name}
-                    </button>`
-          )}
-        </div>
-        
-      </form> -->
       
     <label>Filter by features
       <div class="grid2">
-        <div class="tipos" @click="${() => this.eventGenerator("maxpower")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("maxpower", e, "0")}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-top"
@@ -288,7 +285,7 @@ export class NavComponent extends LitElement {
             />
           </svg>
         </div>
-        <div class="tipos" @click="${() => this.eventGenerator("maxheight")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("maxheight",e, 1)}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-top"
@@ -307,7 +304,7 @@ export class NavComponent extends LitElement {
             />
           </svg>
         </div>
-        <div class="tipos" @click="${() => this.eventGenerator("maxweight")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("maxweight",e, 2)}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-top"
@@ -329,7 +326,7 @@ export class NavComponent extends LitElement {
         <div class="features">exp</div>
         <div class="features">height</div>
         <div class="features">weight</div>
-        <div class="tipos" @click="${() => this.eventGenerator("lesspower")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("lesspower",e, 3)}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-down"
@@ -348,7 +345,7 @@ export class NavComponent extends LitElement {
             />
           </svg>
         </div>
-        <div class="tipos" @click="${() => this.eventGenerator("lessheight")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("lessheight",e, 4)}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-down"
@@ -367,7 +364,7 @@ export class NavComponent extends LitElement {
             />
           </svg>
         </div>
-        <div class="tipos" @click="${() => this.eventGenerator("lessweight")}">
+        <div class="tipos" @click="${(e) => this.eventGenerator("lessweight",e,5)}">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-arrow-big-down"
@@ -400,10 +397,25 @@ export class NavComponent extends LitElement {
   }
   connectedCallback() {
     super.connectedCallback();
+    this.initEvents();
+    
+  }
+ 
+  datalistDontShowAll(){
+    const search = this.shadowRoot.querySelector('#byname');
+    const datalist = this.shadowRoot.querySelector('.datalist');
+    search.addEventListener("click", (e) => {datalist.setAttribute("id", "" )});
+    search.addEventListener("keyup", (e) => {
+      (e.target.value.length > 1 ) ? datalist.setAttribute("id", "types")
+                                   : datalist.setAttribute("id", "");
+    });
+}
+ 
+  initEvents(){
     document.addEventListener("datatypes", (e) => {
       this.datatypes = e.detail.data;
       this.allPokemon = e.detail.all;
-      console.log(this.allPokemon);
+      this.datalistDontShowAll();
     });
     document.addEventListener("hideButtons",(e)=>{
       this.hideButtons();
@@ -411,9 +423,42 @@ export class NavComponent extends LitElement {
     document.addEventListener("showButtons",(e)=>{
       this.showButtons();
     });
- 
   }
-  eventGenerator(param, param2) {
+
+  changeSelectedButton(number){
+    if(number){
+      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".tipos")];
+      const svgArrowsDomSelected=[...this.shadowRoot.querySelectorAll("svg")];
+      featuresDomSelected.forEach((elem,i)=>{
+        if(i==number){
+          elem.classList.add("press")
+        }
+        else{
+          elem.classList.remove("press");
+        }
+      })
+      svgArrowsDomSelected.forEach((elem,i)=>{
+        if(i==number){
+          elem.setAttribute("stroke","#356abc")
+        }
+        else{
+          elem.setAttribute("stroke","#FFCC03");
+        }
+      })
+    }
+  }
+
+  disableAllSelectedButton(param){
+    if(param=="cleanallbuttons"){
+      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".tipos")];
+      featuresDomSelected.forEach((elem,i)=>{
+      elem.classList.remove("press")
+      })
+    }
+  }
+  
+  eventGenerator(param, param2, param3) {
+    console.log(param3);
     const message = new CustomEvent(param, {
       bubbles: true,
       composed: true,
@@ -423,22 +468,19 @@ export class NavComponent extends LitElement {
       },
     });
     this.dispatchEvent(message);
-    console.log("envia evento", param);
-
+    this.changeSelectedButton(param3);
   }
+  
+  
   checkInput(){
       this.value=this.value.toLowerCase();
     const found = this.allPokemon.find(element => element.data.name == this.value);
     if (found!=undefined){
-        console.log("lo ha encontrado")
-
-        console.log(found.data.id);
         const id=found.data.id;
         Router.go(`/info/${id}`);
         this.hideButtons();
     }
     else{
-        console.log("no lo ha encontrado");
         setTimeout(()=>{this.shadowRoot.querySelector("input").value="";},1200);
         this.shadowRoot.querySelector("input").value="I didn´t find it";
     }
@@ -464,9 +506,11 @@ export class NavComponent extends LitElement {
   }
 
   toPokeball(){
-    Router.go("/pokeball");
-    this.hideButtons();
-   
+    if(localStorage.getItem("pokeInside")){ 
+        Router.go("/pokeball");
+        this.hideButtons();
+      }
+  
   }
   
 }

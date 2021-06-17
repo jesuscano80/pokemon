@@ -9,16 +9,14 @@ export class PokeComponent extends LitElement{
     constructor(){
         super();
         this.service= new PokeService();
-        this.allPokemon;
-        this.allPokemonOriginal;
+        this.pokemonRender;
+        this.pokemonCopy;
         this.renderComplete=false;  
         this.pokeball=[];
         this.pokemonInsidePokeball;
       
   }
       
-    
-
     static get styles(){
         return css`
         * {
@@ -39,23 +37,23 @@ export class PokeComponent extends LitElement{
             width:220px;
             border: 1px solid black;
             border-radius:5px;
-            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);                
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);                
         }
         .loading{
             display:flex;
             justify-content:center;
             align-items:center;
             height: 100vh; 
-            width:140%; 
+            width:160%; 
             cursor: wait; 
         }
         .bannercolor{
             display:flex;
             justify-content:flex-end;
+            position:relative;
             align-items:flex-start;
             width:100%;
             height: 120px;
-            background: linear-gradient(90deg, rgba(53,50,106,1) 0%, rgba(65,65,201,1) 6%, rgba(0,212,255,1) 100%);
         }
         .card-body{
             text-align: center;
@@ -65,9 +63,11 @@ export class PokeComponent extends LitElement{
             flex-direction: column;
             height:calc(100% - 70px);
             cursor: pointer;
+            background-color:#808080;
         }
         heart-comp{
             cursor: pointer;
+            margin-right:5px;
         }    
         .div-image{
             display:flex;
@@ -77,22 +77,24 @@ export class PokeComponent extends LitElement{
             background-color: white;
             overflow: hidden;
             margin:0 auto;
+            position: relative;
+            z-index: 5;
         }
         .card-image{
             background: rgba(1,1,1,0.1);
             border-radius:50px;
             padding: 7px;
+            position:relative;
+            z-index:4;
            
         }
         .hidden{
         display:none;
         }
-        .card-image:hover{
-            transform: scale(1.2)
-        }
         .pokemon-name{
             padding: 10px 0;
             font-size:1.5em;
+            color:whitesmoke;
             
         }
         .card-bottom-tittle{
@@ -120,123 +122,124 @@ export class PokeComponent extends LitElement{
         }
         .exp, .hei, .wei{
             font-size:0.8em;
+            color: whitesmoke;
         }
         .pokeball{
             cursor: pointer;
             width:20px;
         }
         .bug {
-    background: #92BC2C;
-    box-shadow: 0 0 20px #92BC2C;
-}
-
-.dark {
-    background: #595761;
-    box-shadow: 0 0 20px #595761;
-}
-
-.dragon {
-    background: #0C69C8;
-    box-shadow: 0 0 20px #0C69C8;
-}
-
-.electric {
-    background: #F2D94E;
-    box-shadow: 0 0 20px #F2D94E;
-}
-
-.fire {
-    background: #FBA54C;
-    box-shadow: 0 0 20px #FBA54C;
-}
-
-.fairy {
-    background: #EE90E6;
-    box-shadow: 0 0 20px #EE90E6;
-}
-
-.fighting {
-    background: #D3425F;
-    box-shadow: 0 0 20px #D3425F;
-}
-
-.flying {
-    background: #A1BBEC;
-    box-shadow: 0 0 20px #A1BBEC;
-}
-
-.ghost {
-    background: #5F6DBC;
-    box-shadow: 0 0 20px #5F6DBC;
-}
-
-.grass {
-    background: #5FBD58;
-    box-shadow: 0 0 20px #5FBD58;
-}
-
-.ground {
-    background: #DA7C4D;
-    box-shadow: 0 0 20px #DA7C4D;
-}
-
-.ice {
-    background: #75D0C1;
-    box-shadow: 0 0 20px #75D0C1;
-}
-
-.normal {
-    background: #A0A29F;
-    box-shadow: 0 0 20px #A0A29F;
-}
-
-.poison {
-    background: #B763CF;
-    box-shadow: 0 0 20px #B763CF;
-}
-
-.psychic {
-    background: #FA8581;
-    box-shadow: 0 0 20px #FA8581;
-}
-
-.rock {
-    background: #C9BB8A;
-    box-shadow: 0 0 20px #C9BB8A;
-}
-
-.steel {
-    background: #5695A3;
-    box-shadow: 0 0 20px #5695A3;
-}
-
-.water {
-    background: #539DDF;
-    box-shadow: 0 0 20px #539DDF;
-}
-
-
-@media screen and (max-width:768px){
-    :host{
-            width:100%;
-            display:grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
-@media screen and (max-width:768px){
-    :host{
-            width:100%;
-            display:grid;
-            grid-template-columns: repeat(1, 1fr);
+            background: #92BC2C;
+            box-shadow: 0 0 20px #92BC2C;
         }
 
-        `
+        .dark {
+            background: #595761;
+            box-shadow: 0 0 20px #595761;
+        }
 
+        .dragon {
+            background: #0C69C8;
+            box-shadow: 0 0 20px #0C69C8;
+        }
+
+        .electric {
+            background: #F2D94E;
+            box-shadow: 0 0 20px #F2D94E;
+        }
+
+        .fire {
+            background: #FBA54C;
+            box-shadow: 0 0 20px #FBA54C;
+        }
+
+        .fairy {
+            background: #EE90E6;
+            box-shadow: 0 0 20px #EE90E6;
+        }
+
+        .fighting {
+            background: #D3425F;
+            box-shadow: 0 0 20px #D3425F;
+        }
+
+        .flying {
+            background: #A1BBEC;
+            box-shadow: 0 0 20px #A1BBEC;
+        }
+
+        .ghost {
+            background: #5F6DBC;
+            box-shadow: 0 0 20px #5F6DBC;
+        }
+
+        .grass {
+            background: #5FBD58;
+            box-shadow: 0 0 20px #5FBD58;
+        }
+
+        .ground {
+            background: #DA7C4D;
+            box-shadow: 0 0 20px #DA7C4D;
+        }
+
+        .ice {
+            background: #75D0C1;
+            box-shadow: 0 0 20px #75D0C1;
+        }
+
+        .normal {
+            background: #A0A29F;
+            box-shadow: 0 0 20px #A0A29F;
+        }
+
+        .poison {
+            background: #B763CF;
+            box-shadow: 0 0 20px #B763CF;
+        }
+
+        .psychic {
+            background: #FA8581;
+            box-shadow: 0 0 20px #FA8581;
+        }
+
+        .rock {
+            background: #C9BB8A;
+            box-shadow: 0 0 20px #C9BB8A;
+        }
+
+        .steel {
+            background: #5695A3;
+            box-shadow: 0 0 20px #5695A3;
+        }
+
+        .water {
+            background: #539DDF;
+            box-shadow: 0 0 20px #539DDF;
+        }
+
+
+        @media screen and (max-width:768px){
+            :host{
+                    width:100%;
+                    display:grid;
+                    grid-template-columns: repeat(2, 1fr);
+                }
+        @media screen and (max-width:768px){
+            :host{
+                    width:100%;
+                    display:grid;
+                    grid-template-columns: repeat(1, 1fr);
+                }
+            
+                `
+            
     }
 
     static get properties(){
         return{
-    allPokemon: {type: Object},
-    renderComplete: {type: Boolean} 
+        pokemonRender: {type: Object},
+        renderComplete: {type: Boolean} 
         }
     }
 
@@ -244,7 +247,7 @@ export class PokeComponent extends LitElement{
 
     render()
     {  return this.renderComplete 
-            ? html`${this.allPokemon && this.allPokemon.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+            ? html`${this.pokemonRender && this.pokemonRender.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;z-index:2}</style>
                 <article class="card">
                     <div class="bannercolor type-${pokemon.data.id}">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" @click=${()=>this.toPokeball(pokemon.data.id)}>
@@ -252,19 +255,23 @@ export class PokeComponent extends LitElement{
                     </div>
                     <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
                         <div class="div-image">
-                        <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
-                        <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
-                        <div class="divIcon">
-                            <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
-                        </div>
-                        <div class="card-bottom-tittle">
-                            <div class="exp">exp</div>
-                            <div class="hei">height</div>
-                            <div class="wei">weight</div>
-                            <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
-                            <div class="hei"><b>${pokemon.data.height}m</b></div>
-                            <div class="wei"><b>${pokemon.data.weight}kg</b></div>
-                        </div> 
+                            <img class="card-image image-flying-${pokemon.data.id}"
+                             src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
+                            <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
+                            <div class="divIcon">
+                                <img class="icon ${pokemon.data.types[0].type.name}" 
+                                title="${pokemon.data.types[0].type.name}" 
+                                alt="Pokemon type ${pokemon.data.types[0].type.name}" 
+                                src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
+                            </div>
+                            <div class="card-bottom-tittle">
+                                <div class="exp">exp</div>
+                                <div class="hei">height</div>
+                                <div class="wei">weight</div>
+                                <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
+                                <div class="hei"><b>${pokemon.data.height}m</b></div>
+                                <div class="wei"><b>${pokemon.data.weight}kg</b></div>
+                            </div> 
                     </div>
                 </article> `)}`
                 : html `<div class="loading">
@@ -274,128 +281,104 @@ export class PokeComponent extends LitElement{
 
     async connectedCallback(){
         super.connectedCallback();
-        this.allPokemon=await this.service.get20Pokemon();
-        this.generateDocumentAddListeners();
-        this.dataTypesFiltered=this.allPokemon.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
-        this.generateAddEvent(this.dataTypesFiltered);
-        this.allPokemonOriginal=[...this.allPokemon];
-        this.eventGenerator("datatypes",this.dataTypesFiltered, this.allPokemon);
+        await this.takeDatafromAPI();
+        this.sendTypesToNav();
         this.renderComplete=true;    
-       
+    
     }
 
-   
-         
+    async takeDatafromAPI(){
+        this.pokemonRender=await this.service.get20Pokemon();
+        this.pokemonCopy=[...this.pokemonRender];
+    }
 
-getLessPower(){
-        
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.base_experince > b.data.base_experience) {
-            return 1;
-        }
-        if (a.data.base_experience < b.data.base_experience) {
-            return -1;
-        }
-        return 0;
-    });
-    this.allPokemon=[...this.allPokemon];
-}
+    sendTypesToNav(){
+        this.dataTypesFiltered=this.pokemonRender.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
+        this.generateAddEvent(this.dataTypesFiltered);
+        this.eventGenerator("datatypes",this.dataTypesFiltered, this.pokemonRender);
+    }
 
-getMaxPower(){
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.base_experince < b.data.base_experience) {
-            return 1;
-        }
-        if (a.data.base_experience > b.data.base_experience) {
-            return -1;
-        }
-        return 0;
-    })
-    this.allPokemon=[...this.allPokemon];
-}
-getLessHeight(){
-    
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.height < b.data.height) {
-            return -1;
-        }
-        if (a.data.height > b.data.height) {
-            return 1
-        }
-        return 0;
-    })
-    this.allPokemon=[...this.allPokemon];
-}
+    getLessPower(){
 
-getMaxHeight(){
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.height < b.data.height) {
-            return 1;
-        }
-        if (a.data.height > b.data.height) {
-            return -1;
-        }
-        return 0;
-    })
-    this.allPokemon=[...this.allPokemon];
-
-}
-getLessWeight(){
-    
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.weight < b.data.weight) {
-            return -1;
-        }
-        if (a.data.weight > b.data.weight) {
-            return 1
-        }
-        return 0;
-    })
-    this.allPokemon=[...this.allPokemon];
-}
-
-getMaxWeight(){
-    this.allPokemon.sort(function(a, b) {
-        if (a.data.weight < b.data.weight) {
-            return 1;
-        }
-        if (a.data.weight > b.data.weight) {
-            return -1;
-        }
-        return 0;
-    })
-    this.allPokemon=[...this.allPokemon];
-
-}
-generateDocumentAddListeners(){
-    document.addEventListener("maxpower", (e) => {
-        console.log(e.detail.msg);
-        this.getMaxPower(); 
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.base_experince > b.data.base_experience) {
+                return 1;
+            }
+            if (a.data.base_experience < b.data.base_experience) {
+                return -1;
+            }
+            return 0;   
         });
-    document.addEventListener("lesspower", (e) => {
-    console.log(e.detail.msg);
-    this.getLessPower(); 
-    });
-    document.addEventListener("lessheight", (e) => {
-    console.log(e.detail.msg);
-    this.getLessHeight(); 
-    });
-    document.addEventListener("maxheight", (e) => {
-    console.log(e.detail.msg);
-    this.getMaxHeight(); 
-    });
-    document.addEventListener("lessweight", (e) => {
-    console.log(e.detail.msg);
-    this.getLessWeight(); 
-    });
-    document.addEventListener("maxweight", (e) => {
-    console.log(e.detail.msg);
-    this.getMaxWeight(); 
-    });
-   
-}
+        this.pokemonRender=[...this.pokemonRender];
+    }
+
+    getMaxPower(){
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.base_experince < b.data.base_experience) {
+                return 1;
+            }
+            if (a.data.base_experience > b.data.base_experience) {
+                return -1;
+            }
+            return 0;
+        })
+        this.pokemonRender=[...this.pokemonRender];
+    }
+    getLessHeight(){
+
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.height < b.data.height) {
+                return -1;
+            }
+            if (a.data.height > b.data.height) {
+                return 1
+            }
+            return 0;
+        })
+        this.pokemonRender=[...this.pokemonRender];
+    }
+
+    getMaxHeight(){
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.height < b.data.height) {
+                return 1;
+            }
+            if (a.data.height > b.data.height) {
+                return -1;
+            }
+            return 0;
+        })
+        this.pokemonRender=[...this.pokemonRender];
+
+    }
+    getLessWeight(){
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.weight < b.data.weight) {
+                return -1;
+            }
+            if (a.data.weight > b.data.weight) {
+                return 1
+            }
+            return 0;
+        })
+        this.pokemonRender=[...this.pokemonRender];
+    }
+
+    getMaxWeight(){
+        this.pokemonRender.sort(function(a, b) {
+            if (a.data.weight < b.data.weight) {
+                return 1;
+            }
+            if (a.data.weight > b.data.weight) {
+                return -1;
+            }
+            return 0;
+        })
+        this.pokemonRender=[...this.pokemonRender];
+
+    }
     eventGenerator(param, datasend, allpoke){
-        
+
         const message = new CustomEvent(param, {
             bubbles: true,
             composed: true,
@@ -406,39 +389,55 @@ generateDocumentAddListeners(){
             }
             })
             this.dispatchEvent(message);
-            
-            console.log("envia evento", param);
+
     }
     generateAddEvent(param){
-        
+
         param.forEach(elem=>{
             const type=elem.data.types[0].type.name;
                 document.addEventListener(type, ()=>{    
-                this.allPokemon=[...this.allPokemonOriginal];
-                const filtered=this.allPokemon.filter((elem)=>elem.data.types[0].type.name==type);
-                this.allPokemon=[...filtered];
-                
-            })
-                
+                this.pokemonRender=[...this.pokemonCopy];
+                const filtered=this.pokemonRender.filter((elem)=>elem.data.types[0].type.name==type);
+                this.pokemonRender=[...filtered];            
+            })             
         })
-
+        document.addEventListener("maxpower", (e) => {
+        this.getMaxPower(); 
+        });
+        document.addEventListener("lesspower", (e) => {
+            this.getLessPower(); 
+        });
+        document.addEventListener("lessheight", (e) => {
+            this.getLessHeight(); 
+        });
+        document.addEventListener("maxheight", (e) => {
+            this.getMaxHeight(); 
+        });
+        document.addEventListener("lessweight", (e) => {
+            this.getLessWeight();
+        });
+        document.addEventListener("maxweight", (e) => {
+            this.getMaxWeight(); 
+        });
+        document.addEventListener("all types", (e)=>{
+            this.pokemonRender=[...this.pokemonCopy];
+        })
     }
-
     capitalize= (name)=>{
             return  name[0].toUpperCase() + name.slice(1);
           }
+
     sendTo(id){
         Router.go(`/info/${id}`)
         this.eventGenerator("hideButtons");
     }
 
-    toPokeball(id){
+    pushToLocalStorage(id){
         if (localStorage.getItem("pokeInside")){
             const data=JSON.parse(localStorage.getItem("pokeInside"));
             data.forEach((elem)=>{
                 this.pokeball.push(elem);
             })
-            
             this.pokeball.push(id);
             localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
         }
@@ -446,13 +445,22 @@ generateDocumentAddListeners(){
             this.pokeball.push(id);
             localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
         }
-        
+    }
+    showCatchAndHidePokeball(){
         const pokeballSelected=this.shadowRoot.querySelector(`.pokeball-${id}`);
         pokeballSelected.classList.add("hidden");
         const pokemonSelected=this.shadowRoot.querySelector(`.image-flying-${id}`)
-        pokemonSelected.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png");
-        this.pokemonInsidePokeball= this.allPokemon.filter((elem)=> this.pokeball.includes(elem.data.id));
-        
+        pokemonSelected.setAttribute(
+            "src",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png"
+            );
+    }
+
+    toPokeball(id){
+
+        this.pushToLocalStorage(id);
+        this.showCatchAndHidePokeball();
+      return this.pokemonInsidePokeball= this.pokemonRender.filter((elem)=> this.pokeball.includes(elem.data.id));   
     }
 }
 

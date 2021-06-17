@@ -98,10 +98,7 @@ export class EvolutionComp extends LitElement{
             cursor: pointer;
         }
         
-        .exp, .hei, .wei{
-            font-size:0.8em;
-            color:yellow;
-        }
+       
         .spacearound{
             display:flex;
             flex-direction: row;
@@ -109,9 +106,17 @@ export class EvolutionComp extends LitElement{
             align-items: center;
         }
         
-        progress::-moz-progress-bar {background-color: #F5FFFA !important;border-radius: 10px;}
-        progress::-webkit-progress-bar {background-color: #F5FFFA !important;border-radius: 10px;}
-        progress {  appearance: none;}
+        progress::-moz-progress-bar{
+            background-color: #F5FFFA !important;
+            border-radius: 10px;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #F5FFFA !important;
+            border-radius: 10px;
+        }
+        progress {
+            appearance: none;
+        }
         .icon-tabler-arrow-down:first-of-type{
             display:none;
         }
@@ -126,7 +131,7 @@ export class EvolutionComp extends LitElement{
                           .${this.chosen.data.types[0].type.name}p{background:var(--color-${this.chosen.data.types[0].type.name}-p)!important;}
                           progress::-webkit-progress-value{ background-color: var(--color-${this.chosen.data.types[0].type.name}-p)!important;border-radius: 7px;}
                           progress::-moz-progress-value {background-color: var(--color-${this.chosen.data.types[0].type.name}-p)!important;border-radius: 7px;}
-            </style>
+                    </style>
         <article class="card ${this.chosen.data.types[0].type.name}" >
         
         <svg id="back" @click=${this.backHome} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="80" height="80" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -174,8 +179,6 @@ export class EvolutionComp extends LitElement{
         </div>       
       </div>      
     </article>
-   
-   
     `
         : html`<div class="loading">
            <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
@@ -187,6 +190,11 @@ export class EvolutionComp extends LitElement{
 
     async connectedCallback(){
         super.connectedCallback();
+        await this.getdataAPI();
+        this.renderComplete=true;
+    }
+
+    async getdataAPI(){
         this.id= router.location.params.id;
         this.allPokemon=await this.service.get20Pokemon();
         this.chosen = this.allPokemon.find((elem)=> elem.data.id == this.id);
@@ -195,9 +203,6 @@ export class EvolutionComp extends LitElement{
         const chain= await this.service.getEvolutionChain(idEvolution);
         const data=await this.getEvolution(chain);
         this.evolutions=data;
-        this.renderComplete=true;
-        console.log(speciesData);
-     
     }
 
 
@@ -224,15 +229,11 @@ export class EvolutionComp extends LitElement{
                  objEvol.push({id:this.getId(evolutionChain.data.chain.evolves_to[0].evolves_to[0].species.url), name:`${name4}`})
                 }
                 catch{
-                    console.log("solo tiene dos evoluciones")
+                    
                 }
                     
             }    
-             
-            
-         
         }
-    
         this.evolutions=objEvol;
         return objEvol;
 

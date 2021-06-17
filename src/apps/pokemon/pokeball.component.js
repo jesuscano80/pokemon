@@ -63,7 +63,6 @@ export class Pokeball extends LitElement{
             display:flex;
             flex-direction: column;
             height:calc(100% - 70px);
-            cursor: pointer;
         }
         heart-comp{
             cursor: pointer;
@@ -86,9 +85,7 @@ export class Pokeball extends LitElement{
         .hidden{
         display:none;
         }
-        .card-image:hover{
-            transform: scale(1.2)
-        }
+        
         .pokemon-name{
             padding: 10px 0;
             font-size:1.5em;
@@ -120,20 +117,16 @@ export class Pokeball extends LitElement{
         .exp, .hei, .wei{
             font-size:0.8em;
         }
-        .pokeball{
-            cursor: pointer;
-            width:20px;
-        } ` 
+         ` 
     }
 
     render(){
-        return this.pokemonsInPokeball?.length>0 ? html `<h1 @click=${this.emptyPokeball}>Inside your Pokeball</h1>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+        return this.pokemonsInPokeball?.length>0 ? html `<button @click=${this.emptyPokeball}>Empty Pokeball</button>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
         <article class="card">
             <div class="bannercolor type-${pokemon.data.id}">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" @click=${()=>this.toPokeball(pokemon.data.id)}>
                 <heart-comp></heart-comp>
             </div>
-            <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
+            <div class="card-body">
                 <div class="div-image">
                 <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
                 <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
@@ -150,9 +143,9 @@ export class Pokeball extends LitElement{
                 </div> 
             </div>
         </article>`)}`                       
-                                    : html `<div class="loading">
-                                    <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
-                                </div>`
+                          : html `<div class="loading">
+                          <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
+                      </div>`
     }                              
 
 

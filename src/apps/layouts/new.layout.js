@@ -16,7 +16,7 @@ export class NewLayout extends LitElement{
                     height: 100vh;
                     display: flex;
                     overflow-x: hidden;
-                    background-color: var(--color-newlayout-section, #F5FFFA);
+                    background-color: var(--color-newlayout-section, #D3D3D3);
                     overflow-y: auto;
                     }
                     aside{
@@ -26,7 +26,7 @@ export class NewLayout extends LitElement{
                     border-right: 4px solid #356abc;
                     flex-direction: column;
                     background-color: var(--color-newlayout-aside, #696969);
-                        position: sticky;
+                    position: sticky;
                     top:0;
                     }
                     article{
@@ -49,18 +49,17 @@ export class NewLayout extends LitElement{
                         }
                     }
                     @media screen and (max-width:475px){
-                    aside{
-                        max-width: auto;
-                        min-width: 100%;
-                        width: 100%;
-                        position: fixed;
-                        top: auto;
-                        bottom: 0;
-                        max-height: 60px;
-                        min-height: 60px;
-                        z-index: 1000;
-                    
-                    }
+                        aside{
+                            max-width: auto;
+                            min-width: 100%;
+                            width: 100%;
+                            position: fixed;
+                            top: auto;
+                            bottom: 0;
+                            max-height: 60px;
+                            min-height: 60px;
+                            z-index: 1000;
+                        }
                     section{
                         flex-direction: column-reverse;
                     }
