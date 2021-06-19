@@ -1,13 +1,6 @@
-*{
-    box-sizing: border-box;
-    margin:0;
-    padding:0;
-}
-
 :root{
     --heart-comp-text-back:rgb(1,1,1,0.1);
     --heart-comp-like-back:rgba(201,65,98,1);
-    --holy-content-background-color:white;
     --color-normal:rgb(168,160,144);
     --color-fighting:rgb(160,80,56);
     --color-flying:rgb(152,168,240);
@@ -41,16 +34,34 @@
     --color-psychic-p: #e3e75f;
     --color-rock-p: #f7a9a9;
     --color-ghost-p: #59add1;
+    --color-pink: #128924;
+    /* My own variables */
+    --color-white: #fff;
+    --color-dark: #000;
+    --color-darkGrey: #696969;
+    --color-lightGrey: #808080;
+    --color-blue: #2C71B8;
+    --color-yellow: #FFCC03;
+    --font-size-s: 11px;
+    --font-size-m: 14px;
+    --radius-m: 7px;
+}
+  
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    font-family: 'Rubik', sans-serif;
 }
 main{
     min-height: 100vh;
     width: 100%;
     margin-bottom: 20px;
-    font-family:monospace;
-}
-nav-component{
-    font-family: monospace;
 }
 
-
-
+.dontshowlightdom {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }

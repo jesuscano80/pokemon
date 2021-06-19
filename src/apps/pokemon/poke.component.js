@@ -288,9 +288,6 @@ export class PokeComponent extends LitElement{
         this.renderComplete=true;
     }
 
-    updated(){
-        
-    }
     
 
     sendTypesToNav(){

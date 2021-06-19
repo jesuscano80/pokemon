@@ -20,376 +20,351 @@ export class NavComponent extends LitElement {
         box-sizing: border-box;
         padding: 0;
         margin: 0;
-        
       }
-  
-      form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-      }
-      input {
-        outline: none;
-        border: 5px solid #356abc;
-        height: 36.5px;
-        border-radius: 8px 0 0 8px;
-        width: 100%;
-        background-color: #f5fffa;
-        caret-color: #356abc;
-        text-indent: 5px;
-      }
-      select{
-        outline: none;
-        border: 5px solid #356abc;
-        height: 36.5px;
-        border-radius: 8px 0 0 8px;
-        width: 100%;
-        background-color: #f5fffa;
-        color:#696969;
-        text-indent: 5px;
-      }
-      label{
-        color: #f5fffa;
-        margin-bottom: 5px;
-      }
-      
       section {
-        justify-content: space-between;
-        max-width: 100%;
-        min-width: 100%;
+        max-width: calc(100% - 20px);
+        min-width: calc(100% - 20px);
         height: 100vh;
         max-height: 100%;
         display: flex;
         flex-direction: column;
-        padding: 20px;
-      }
-      .img {
-        height: 120px;
+        align-items: center;
         margin: 0 auto;
-        border-radius: 50%;
-        overflow: hidden;
-        box-shadow: 0 0 10px 3px #f5fffa;
-        cursor: pointer;
-      }
-      img {
-        height: 100%;
-        transform: scale(1.2);
       }
       .logo {
-        margin-left: 10px;
-        width: 10%;
-        height: 10%;
         cursor: pointer;
+        width: 100%;
+        max-width: 240px;
+        min-height: 60px;
+        max-height: 60px;
+        overflow: hidden;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+      .logo > img {
+        height: 100%;
+      }
+      .formByName {
+        width: 100%;
+        max-width: 240px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+      }
+      .formByName > label {
+        margin-left: 2px;
+        font-size: var(--font-size-s);
+        color: var(--color-white);
+        margin-bottom: 20px;
+      }
+      .formByName > div {
+        display: flex;
+        justify-content: space-between;
+        width:100%;
+      }
+      .formByName > div > input {
+        outline: none;
+        height: 32px;
+        border: none;
+        border-radius: var(--radius-m);
+        width: 200px;
+        background-color: var(--color-white);
+        caret-color: var(--color-dark);
+        padding: 0 7px;
+      }
+      .formByName > div > input::placeholder {
+        color: var(--color-lightGrey);
+      }
+      .formByName > div > button {
+        border: none;
+        min-width: 32px;
+        max-width: 32px;
+        min-height: 32px;
+        max-height: 32px;
+        border-radius: 50%;
+        background: var(--color-lightGrey);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .formByName > div > button > img {
+        width: calc(100% - 10px);
+      }
+      .formByPokemonType {
+        width: 100%;
+        max-width: 240px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+      }
+      .formByPokemonType > label {
+        margin-left: 2px;
+        font-size: var(--font-size-s);
+        color: var(--color-white);
+        margin-bottom: 20px;
+      }
+      .formByPokemonType > select {
+        outline: none;
+        height: 32px;
+        border: none;
+        border-radius: var(--radius-m);
+        width: 100%;
+        background-color: var(--color-white);
+        padding: 0 7px;
+        caret-color: var(--color-dark);
+        color: var(--color-drakGrey);
+        outline: none;
+      }
+      .formByPokemonType > select::placeholder {
+        color: var(--color-lightGrey);
+      }
+      .choseOneOption {
+        background-color: var(--color-lightGrey);
+        color: var(--color-white);
+      }
+      .allTypesOption {
+        background-color: var(--color-lightGrey);
+        color: var(--color-white);
+      }
+      .bttns {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 240px;
+        margin-bottom: 30px;
+      }
+      .bttns > p {
+        margin-left: 2px;
+        font-size: var(--font-size-s);
+        color: var(--color-white);
+        margin-bottom: 20px;
+      }
+      .rows {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .column {
+        width: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .column > p {
+        color: var(--color-white);
+        font-size: var(--font-size-m);
+      }
+      .btn {
+        background-color: var(--color-lightGrey);
+        width: 100%;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--radius-m);
+        margin-top: 10px;
+      }
+      .nav {
+        display: flex;
+        flex-direction: column;
+      }
+      .nav > li{
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 32px;
+        width: 240px;
+        margin: 10px;
+        font-size: var(--font-size-m);
+        border-radius: 7px;
+        background-color: var(--color-lightGrey);
+      }
+      .nav > li > a {
+        color: var(--color-white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hidden{
+        display: none;
+      }
+      .press{
+        background-color: #FFCC03;
+      }
+      #types{
+        overflow:hidden;
+        height:0.5em;
+      }
+
+
       .bug {
         background: #92bc2c;
         box-shadow: 0 0 20px #92bc2c;
       }
-
       .dark {
         background: #595761;
         box-shadow: 0 0 20px #595761;
       }
-
       .dragon {
         background: #0c69c8;
         box-shadow: 0 0 20px #0c69c8;
       }
-
       .electric {
         background: #f2d94e;
         box-shadow: 0 0 20px #f2d94e;
       }
-
       .fire {
         background: #fba54c;
         box-shadow: 0 0 20px #fba54c;
       }
-
       .fairy {
         background: #ee90e6;
         box-shadow: 0 0 20px #ee90e6;
       }
-
       .fighting {
         background: #d3425f;
         box-shadow: 0 0 20px #d3425f;
       }
-
       .flying {
         background: #a1bbec;
         box-shadow: 0 0 20px #a1bbec;
       }
-
       .ghost {
         background: #5f6dbc;
         box-shadow: 0 0 20px #5f6dbc;
       }
-
       .grass {
         background: #5fbd58;
         box-shadow: 0 0 20px #5fbd58;
       }
-
       .ground {
         background: #da7c4d;
         box-shadow: 0 0 20px #da7c4d;
       }
-
       .ice {
         background: #75d0c1;
         box-shadow: 0 0 20px #75d0c1;
       }
-
       .normal {
         background: #a0a29f;
         box-shadow: 0 0 20px #a0a29f;
       }
-
       .poison {
         background: #b763cf;
         box-shadow: 0 0 20px #b763cf;
       }
-
       .psychic {
         background: #fa8581;
         box-shadow: 0 0 20px #fa8581;
       }
-
       .rock {
         background: #c9bb8a;
         box-shadow: 0 0 20px #c9bb8a;
       }
-
       .steel {
         background: #5695a3;
         box-shadow: 0 0 20px #5695a3;
       }
-
       .water {
         background: #539ddf;
         box-shadow: 0 0 20px #539ddf;
       }
-
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1em;
-      }
-
-      .grid2{
-        
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 1em;
-      }
-
-      .tipos {
-        padding: 3px;
-        text-align: center;
-        cursor: pointer;
-        background-color: #808080;
-        border-radius: 5px;
-      }
-
-      #types{
-          overflow:hidden;
-          height:0.5em;
-      }
-      .features{
-      padding: 6px;
-        text-align: center;
-      }    
-      .hidden{
-        visibility: hidden;
-      }
-      #but{
-        padding-left: 10px;
-        cursor: pointer;
-      }
-      .multicolor{
-        background: #808080;
-        color: white;
-      }
-      .press{
-        background-color: #FFCC03;
-        
-      }
-     
     `
   }
 
   render() {
-    return html`<section>
-      <div class="logo">
-        <img 
-          @click=${this.goHome}
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/320px-International_Pok%C3%A9mon_logo.svg.png"
-        />
-      </div>
-  
-      <form onSubmit="return false;">
-        <label for="byname">Search by name
-          
-              <input id="byname" list="types" @change="${e => this.value = e.target.value}" size="5" type="text" .value=${this.value} placeholder="e.g. Pikachu" minlength="2" autofocus autocomplete="off">
-              <datalist class="datalist" id="">
-              ${this.allPokemon?.map(
-                  (e) => html`<option>${e.data.name}</option>`
-                  )}
-              </datalist>
-        </label>
- 
-        <img id="but" @click=${this.checkInput} src="https://github.com/jesuscano80/webcomponent-like-heart/blob/master/Button%20Go.png?raw=true">
-        </form>
-        <form id="elselect" onSubmit="return false;">
-         <label>Search by Pokemon type
+    return html`
+      <section>
+
+        <div class="logo">
+          <img @click=${this.goHome} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/320px-International_Pok%C3%A9mon_logo.svg.png"/>
+        </div>
+
+        <form id="elselect" onSubmit="return false;" class="formByPokemonType">
+          <label>Search by Pokemon type</label>
           <select @change="${(e) => this.eventGenerator(e.target.value, e, "cleanallbuttons")}">
-            <option selected>choose one</option>
-            <option class="multicolor">all types</option>
+          <option class="choseOneOption" selected>choose one</option>
+          <option class="allTypesOption">all types</option>
             ${this.datatypes?.map(
-                    (e) =>
-                      html` <option type="button"
-                            class="optioncolor ${e.data.types[0].type.name}"
-                            >
-                            ${e.data.types[0].type.name}
-                            </option>`
-                  )}
+              (e) =>
+                html` 
+                  <option type="button"
+                    class="optioncolor ${e.data.types[0].type.name}"
+                    >
+                    ${e.data.types[0].type.name}
+                  </option>`
+            )}
           </select>
-          </label>
-    </form>
-    <div class="container">     
+        </form>
+
+        <form onSubmit="return false;" class="formByName">
+          <label for="byname">Search by name</label>
+          <div>
+            <input id="byname" list="types" @change="${e => this.value = e.target.value}" size="5" type="text" .value=${this.value} placeholder="e.g. Pikachu" minlength="2" autofocus autocomplete="off">
+            <datalist class="datalist" id="">
+                ${this.allPokemon?.map(
+                  (e) => html`<option>${e.data.name}</option>`
+                )}
+            </datalist>
+            <button>
+              <img id="but" @click=${this.checkInput} src="https://raw.githubusercontent.com/jesuscano80/webcomponent-like-heart/master/go.png">
+            </button>
+          </div>
+        </form>
       
-    <label>Filter by features
-      <div class="grid2">
-        <div class="tipos" @click="${(e) => this.eventGenerator("maxpower", e, "0")}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-top"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
-            />
-          </svg>
+        <div class="bttns">
+
+          <p>Filter by features</p>
+
+          <div class="rows">
+
+            <div class="column">
+              <p>exp</p>
+              <div class="btn" @click="${(e) => this.eventGenerator("maxpower", e, "0")}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-top" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
+              </div>
+              <div class="btn" @click="${(e) => this.eventGenerator("lesspower",e, 1)}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path   d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z" /> </svg>              
+              </div>
+            </div>
+
+            <div class="column">
+              <p>height</p>
+              <div class="btn" @click="${(e) => this.eventGenerator("maxheight", e, 2)}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-top" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
+              </div>
+              <div class="btn" @click="${(e) => this.eventGenerator("lessheight",e, 3)}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path   d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z" /> </svg>              
+              </div>
+            </div>
+
+            <div class="column">
+              <p>weight</p>
+              <div class="btn" @click="${(e) => this.eventGenerator("maxweight", e, 4)}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-top" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
+              </div>
+              <div class="btn" @click="${(e) => this.eventGenerator("lessweight",e, 5)}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffcc03" fill="none" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path   d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z" /> </svg>              
+              </div>
+            </div>
+
+          </div>
+
         </div>
-        <div class="tipos" @click="${(e) => this.eventGenerator("maxheight",e, 1)}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-top"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
-            />
-          </svg>
-        </div>
-        <div class="tipos" @click="${(e) => this.eventGenerator("maxweight",e, 2)}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-top"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
-            />
-          </svg>
-        </div>
-        <div class="features">exp</div>
-        <div class="features">height</div>
-        <div class="features">weight</div>
-        <div class="tipos" @click="${(e) => this.eventGenerator("lesspower",e, 3)}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-down"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"
-            />
-          </svg>
-        </div>
-        <div class="tipos" @click="${(e) => this.eventGenerator("lessheight",e, 4)}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-down"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"
-            />
-          </svg>
-        </div>
-        <div class="tipos" @click="${(e) => this.eventGenerator("lessweight",e,5)}">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-big-down"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffcc03"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"
-            />
-          </svg>
-        </div>
-      </div>
-    </label>
-    </div>  
-    
-      <div class="img" @click=${this.toPokeball}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png"
-        />
-      </div>
-    </section>
-   `;
+
+        <nav class="nav">
+          <li><a>Buscador de pokemons</a></li>
+          <li><a>Mis pokemons favoritos</a></li>
+        </nav>
+
+      </section>
+    `;
   }
   connectedCallback() {
     super.connectedCallback();
