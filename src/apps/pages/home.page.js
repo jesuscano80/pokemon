@@ -20,7 +20,7 @@ export class HomePage extends LitElement{
             <!-- INSIDE POKE-COMP IS LIGHTDOM, IT DOESNT DISPLAY ONLY FOR SEO -->
         
                         ${this.allPokemon?.map((pokemon)=> html`
-                            <ul slot="article">
+                            <ul >
                                 <li>
                                     <img name="imagen" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png" aria-labelledby="description1"/>
                                     <p id="description1" name="description">${pokemon.data.name} image</p>

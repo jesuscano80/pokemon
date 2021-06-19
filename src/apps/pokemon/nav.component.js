@@ -482,7 +482,7 @@ export class NavComponent extends LitElement {
     
   }
   goHome(){
-      Router.go("/post");
+      Router.go("/");
       this.showButtons();
   }
 

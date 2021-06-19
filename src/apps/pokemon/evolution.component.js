@@ -249,7 +249,7 @@ export class EvolutionComp extends LitElement{
          return toArray[toArray.length-2];
      }
      backHome(){
-         Router.go("/post");
+         Router.go("/");
          this.eventGenerator("showButtons"); 
      }
 

@@ -1,7 +1,7 @@
 #  Pokemon Website for 5th K Generation  🐱 
 
 
-  - ## the web has a collection with cards of the first hundred pokemon.
+  - ## Web has a collection with cards of the first hundred pokemon.
       =>  Here you can see all cards with images and Pokemon data, you can filter Pokemon by type and features and you can search Pokemon by name.
   - ## Has an evolution zone 
       => You can click in each Pokemon image and it will show you evolution phases of each one.
