@@ -170,13 +170,16 @@ export class EvolutionComp extends LitElement{
             </div>
         </div>
         <div class="right">
-            ${this.evolutions.map((evol)=> html `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-down" width="80" height="80" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <line x1="12" y1="5" x2="12" y2="19" />
-  <line x1="18" y1="13" x2="12" y2="19" />
-  <line x1="6" y1="13" x2="12" y2="19" />
-</svg><div class="pokemonnames">${this.capitalize(evol.name)}</div><img class="image" src="https://pokeres.bastionbot.org/images/pokemon/${evol.id}.png">`)}
-        </div>       
+            ${this.evolutions.map((evol)=> html `
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-down" width="80" height="80" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="18" y1="13" x2="12" y2="19" />
+                      <line x1="6" y1="13" x2="12" y2="19" />
+            </svg>
+            <div class="pokemonnames">${this.capitalize(evol.name)}</div>
+                <img class="image" src="https://pokeres.bastionbot.org/images/pokemon/${evol.id}.png">`)}
+            </div>       
       </div>      
     </article>
     `
@@ -203,6 +206,7 @@ export class EvolutionComp extends LitElement{
         const chain= await this.service.getEvolutionChain(idEvolution);
         const data=await this.getEvolution(chain);
         this.evolutions=data;
+        this.eventGenerator("sendEvolution", this.evolutions);
     }
 
 
@@ -253,12 +257,13 @@ export class EvolutionComp extends LitElement{
          this.eventGenerator("showButtons"); 
      }
 
-     eventGenerator(param) {
+     eventGenerator(param, param2) {
         const message = new CustomEvent(param, {
           bubbles: true,
           composed: true,
           detail: {
-            msg: param
+            msg: param,
+            evolution: param2
           },
         });
         this.dispatchEvent(message);

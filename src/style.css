@@ -5,7 +5,6 @@
 }
 
 :root{
-    --color-poc:yellow;
     --heart-comp-text-back:rgb(1,1,1,0.1);
     --heart-comp-like-back:rgba(201,65,98,1);
     --holy-content-background-color:white;
@@ -42,7 +41,6 @@
     --color-psychic-p: #e3e75f;
     --color-rock-p: #f7a9a9;
     --color-ghost-p: #59add1;
-    --color-pink: #128924;
 }
 main{
     min-height: 100vh;
@@ -53,8 +51,6 @@ main{
 nav-component{
     font-family: monospace;
 }
-genk-posts::part(hello){
-    color:pink;
-}
+
 
 

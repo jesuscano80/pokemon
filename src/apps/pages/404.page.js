@@ -1,7 +1,7 @@
 import { Router } from "@vaadin/router";
 import { LitElement,html, css } from "lit";
 
-export class page404 extends LitElement{
+export class Page404 extends LitElement{
     constructor(){
         super();
     }
@@ -52,4 +52,4 @@ export class page404 extends LitElement{
     }
 }
 
-customElements.define("page-404",page404);
+customElements.define("page-404", Page404);

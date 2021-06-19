@@ -5,6 +5,6 @@ export const router= new Router(outlet);
 router.setRoutes([
 { path:"/", component: "home-page"},
 { path: "/info/:id", component: "evolution-page" },
-{ path: "/pokeball", component: "pokeball-comp"},
+{ path: "/pokeball", component: "pokeball-page"},
 { path:"(.*)", component: "page-404"}
 ])

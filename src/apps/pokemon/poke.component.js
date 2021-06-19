@@ -284,11 +284,12 @@ export class PokeComponent extends LitElement{
         super.connectedCallback();
         this.pokemonRender=await this.service.get20Pokemon();
         this.pokemonCopy=this.pokemonRender;
-        this.renderComplete=true;    
+        this.sendTypesToNav();    
+        this.renderComplete=true;
     }
 
     updated(){
-        this.sendTypesToNav();
+        
     }
     
 

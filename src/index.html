@@ -15,31 +15,33 @@
     <new-layout>
         <nav-component slot="aside">
             <!-- INSIDE NAV-COMPONENT IS LIGHTDOM, IT DOESNT DISPLAY ONLY FOR SEO -->
-            <nav>
-                <a href="/">Link to home</a>
-                <a href="/post">Link to Pokedex page</a>
-                <a href="/pokeball">Link to Pokeball page</a>                
-            </nav>
-            <form slot="aside" aria-labelledby="searchname" aria-describedby="infoname">
-                <label id="searchname" for="name">Search Pokemon by name</label>
-                    <input id="name" type="text" name="pokemon">
-                    <button>Search</button>
-                    <p id="infoname">This form is to look for a Pokemon</p>
-                </label>    
-            </form>
-            <label id="searchtype" for="selecttype">Filter by Pokemon type</label>
-            <select slot="aside" id="selecttype" aria-labelledby="searchtype" aria-describedby="infotype">
-                <option>grass</option>
-                <option>water</option>
-                <option>bug</option>
-                <option>normal</option>
-                <option>fire</option>
-                <option>ghost</option>
-                <option>fire</option>
-                <option>electric</option>
-                <option>all types</option>
-            </select>
-            <p id="infotype">Filter to show pokemon attending to its type</p>
+            <div class="dontshowlightdom"> 
+                <nav>
+                    <a href="/">Link to home</a>
+                    <a href="/post">Link to Pokedex page</a>
+                    <a href="/pokeball">Link to Pokeball page</a>                
+                </nav>
+                <form slot="aside" aria-labelledby="searchname" aria-describedby="infoname">
+                    <label id="searchname" for="name">Search Pokemon by name</label>
+                        <input id="name" type="text" name="pokemon">
+                        <button>Search</button>
+                        <p id="infoname">This form is to look for a Pokemon</p>
+                    </label>    
+                </form>
+                <label id="searchtype" for="selecttype">Filter by Pokemon type</label>
+                <select slot="aside" id="selecttype" aria-labelledby="searchtype" aria-describedby="infotype">
+                    <option>grass</option>
+                    <option>water</option>
+                    <option>bug</option>
+                    <option>normal</option>
+                    <option>fire</option>
+                    <option>ghost</option>
+                    <option>fire</option>
+                    <option>electric</option>
+                    <option>all types</option>
+                </select>
+                <p id="infotype">Filter to show pokemon attending to its type</p>
+            </div>
         </nav-component>
         
         <main slot="article" id="outlet">

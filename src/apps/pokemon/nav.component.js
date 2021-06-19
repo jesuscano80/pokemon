@@ -22,6 +22,7 @@ export class NavComponent extends LitElement {
         margin: 0;
         
       }
+  
       form {
         display: flex;
         justify-content: center;
