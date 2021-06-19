@@ -27,8 +27,22 @@ export class Pokeball extends LitElement{
         }
         :host{
             width:100%;
-            display:grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
+        }
+        .btn {
+            width: calc(100% - 40px);
+            height: 32px;
+            margin: 5px auto;
+            border: none;
+            background-color: var(--color-lightGrey);
+            color: var(--color-white);
+            border-radius: var(--radius-m);
+            cursor: pointer;
+        }
+        section {
+            display: grid;
+            grid-template-columns: repeat(3 , 1fr);
         }
         .card{
             margin: 0 auto;
@@ -38,7 +52,7 @@ export class Pokeball extends LitElement{
             width:220px;
             border: 1px solid black;
             border-radius:5px;
-            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);                
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
         }
         .loading{
             display:flex;
@@ -89,7 +103,6 @@ export class Pokeball extends LitElement{
         .pokemon-name{
             padding: 10px 0;
             font-size:1.5em;
-            
         }
         .card-bottom-tittle{
             display:grid;
@@ -121,28 +134,31 @@ export class Pokeball extends LitElement{
     }
 
     render(){
-        return this.pokemonsInPokeball?.length>0 ? html `<button @click=${this.emptyPokeball}>Empty Pokeball</button>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
-        <article class="card">
-            <div class="bannercolor type-${pokemon.data.id}">
-                <heart-comp></heart-comp>
-            </div>
-            <div class="card-body">
-                <div class="div-image">
-                <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
-                <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
-                <div class="divIcon">
-                    <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
+        return this.pokemonsInPokeball?.length>0 ? html `<button class="btn" @click=${this.emptyPokeball}>Empty Pokeball</button>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+           <section>
+            <article class="card">
+                <div class="bannercolor type-${pokemon.data.id}">
+                    <heart-comp></heart-comp>
                 </div>
-                <div class="card-bottom-tittle">
-                    <div class="exp">exp</div>
-                    <div class="hei">height</div>
-                    <div class="wei">weight</div>
-                    <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
-                    <div class="hei"><b>${pokemon.data.height}m</b></div>
-                    <div class="wei"><b>${pokemon.data.weight}kg</b></div>
-                </div> 
-            </div>
-        </article>`)}`                       
+                <div class="card-body">
+                    <div class="div-image">
+                    <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png"></div>
+                    <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
+                    <div class="divIcon">
+                        <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
+                    </div>
+                    <div class="card-bottom-tittle">
+                        <div class="exp">exp</div>
+                        <div class="hei">height</div>
+                        <div class="wei">weight</div>
+                        <div class="exp"><b>${pokemon.data.base_experience}pts</b></div>
+                        <div class="hei"><b>${pokemon.data.height}m</b></div>
+                        <div class="wei"><b>${pokemon.data.weight}kg</b></div>
+                    </div> 
+                </div>
+            </article>
+        </section>
+        `)}`                       
                           : html `<div class="loading">
                           <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
                       </div>`

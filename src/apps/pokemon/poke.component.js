@@ -14,6 +14,7 @@ export class PokeComponent extends LitElement{
         this.renderComplete=false;  
         this.pokeball=[];
         this.pokemonInsidePokeball;
+        this.heartvalue=false;
       
   }
       
@@ -239,7 +240,8 @@ export class PokeComponent extends LitElement{
     static get properties(){
         return{
         pokemonRender: {type: Object},
-        renderComplete: {type: Boolean} 
+        renderComplete: {type: Boolean},
+        heartvalue: {type: Boolean}
         }
     }
 
@@ -250,8 +252,8 @@ export class PokeComponent extends LitElement{
             ? html`${this.pokemonRender && this.pokemonRender.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;z-index:2}</style>
                 <article class="card">
                     <div class="bannercolor type-${pokemon.data.id}">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" @click=${()=>this.toPokeball(pokemon.data.id)}>
-                        <heart-comp></heart-comp>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" >
+                        <heart-comp @click=${()=>this.toPokeball(pokemon.data.id)}></heart-comp>
                     </div>
                     <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
                         <div class="div-image">
@@ -431,34 +433,58 @@ export class PokeComponent extends LitElement{
     }
 
     pushToLocalStorage(id){
+        this.pokeball=[];
         if (localStorage.getItem("pokeInside")){
             const data=JSON.parse(localStorage.getItem("pokeInside"));
             data.forEach((elem)=>{
-                this.pokeball.push(elem);
+                    this.pokeball.push(elem);      
             })
-            this.pokeball.push(id);
-            localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
+
+            if(!this.pokeball.includes(id)){
+                console.log("si no está en this.pokeball")
+                this.pokeball.push(id);
+                localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));   
+              } 
+            else{
+                console.log("si está en pokeball deberia borrarlo")
+                const index=this.pokeball.indexOf(id);
+                console.log(index, this.pokeball);
+                this.pokeball.splice(index,1);
+                console.log(this.pokeball);
+                localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));  
+                console.log("LO HA BORRADO", localStorage.getItem("pokeInside"));
+                
+            }
         }
         else{
             this.pokeball.push(id);
             localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
-        }
+        }    
     }
-    showCatchAndHidePokeball(id){
-        const pokeballSelected=this.shadowRoot.querySelector(`.pokeball-${id}`);
-        pokeballSelected.classList.add("hidden");
-        const pokemonSelected=this.shadowRoot.querySelector(`.image-flying-${id}`)
-        pokemonSelected.setAttribute(
-            "src",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png"
-            );
-    }
+  
 
     toPokeball(id){
-
         this.pushToLocalStorage(id);
-        this.showCatchAndHidePokeball(id);
+        this.heartvalue=this.checkHeart(id);
         return this.pokemonInsidePokeball= this.pokemonRender.filter((elem)=> this.pokeball.includes(elem.data.id));   
+    }
+
+    checkHeart(id){
+        let control=false;
+        if (localStorage.getItem("pokeInside")){
+            const data=JSON.parse(localStorage.getItem("pokeInside"));
+            data.forEach((elem)=>{
+                if (elem==id){
+                    console.log(`${elem} es igual a ${id}`);
+                    control=true;
+                }
+            })
+        }
+        else{
+            console.log("adios",id);
+            control=true;
+        }
+        return control;
     }
 }
 
