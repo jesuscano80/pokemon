@@ -9,8 +9,8 @@ export class PokeComponent extends LitElement{
     constructor(){
         super();
         this.service= new PokeService();
-        this.pokemonRender;
-        this.pokemonCopy;
+        this.pokemonRender=[];
+        this.pokemonCopy=[];
         this.renderComplete=false;  
         this.pokeball=[];
         this.pokemonInsidePokeball;
@@ -256,7 +256,8 @@ export class PokeComponent extends LitElement{
                     <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
                         <div class="div-image">
                             <img class="card-image image-flying-${pokemon.data.id}"
-                             src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">                        </div>
+                             src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">
+                        </div>
                             <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
                             <div class="divIcon">
                                 <img class="icon ${pokemon.data.types[0].type.name}" 
@@ -281,16 +282,15 @@ export class PokeComponent extends LitElement{
 
     async connectedCallback(){
         super.connectedCallback();
-        await this.takeDatafromAPI();
-        this.sendTypesToNav();
+        this.pokemonRender=await this.service.get20Pokemon();
+        this.pokemonCopy=this.pokemonRender;
         this.renderComplete=true;    
-    
     }
 
-    async takeDatafromAPI(){
-        this.pokemonRender=await this.service.get20Pokemon();
-        this.pokemonCopy=[...this.pokemonRender];
+    updated(){
+        this.sendTypesToNav();
     }
+    
 
     sendTypesToNav(){
         this.dataTypesFiltered=this.pokemonRender.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
@@ -446,7 +446,7 @@ export class PokeComponent extends LitElement{
             localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));
         }
     }
-    showCatchAndHidePokeball(){
+    showCatchAndHidePokeball(id){
         const pokeballSelected=this.shadowRoot.querySelector(`.pokeball-${id}`);
         pokeballSelected.classList.add("hidden");
         const pokemonSelected=this.shadowRoot.querySelector(`.image-flying-${id}`)
@@ -459,8 +459,8 @@ export class PokeComponent extends LitElement{
     toPokeball(id){
 
         this.pushToLocalStorage(id);
-        this.showCatchAndHidePokeball();
-      return this.pokemonInsidePokeball= this.pokemonRender.filter((elem)=> this.pokeball.includes(elem.data.id));   
+        this.showCatchAndHidePokeball(id);
+        return this.pokemonInsidePokeball= this.pokemonRender.filter((elem)=> this.pokeball.includes(elem.data.id));   
     }
 }
 

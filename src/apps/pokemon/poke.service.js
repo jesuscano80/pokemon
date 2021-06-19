@@ -6,15 +6,18 @@ export class PokeService{
     }
       async get20Pokemon(){
         const list= await this.service.getAllPokemon();
-       return await this.service.getAllPokemonData(list);
+        return await this.service.getAllPokemonData(list);
+    }
+    async getAllPokemon(){
+      return await this.service.getAllPokemon();
     }
 
     async getEvolutionChain(param){
-        return this.service.getEvolutionChain(param);
+        return await this.service.getEvolutionChain(param);
     }
 
     async getSpeciesData(pokeid){
-      return this.service.getSpeciesData(pokeid);
+      return await this.service.getSpeciesData(pokeid);
     }
 
 

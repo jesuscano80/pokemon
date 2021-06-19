@@ -207,9 +207,6 @@ export class NavComponent extends LitElement {
         padding-left: 10px;
         cursor: pointer;
       }
-      #but:hover{
-        transform: scale(1.5);
-      }
       .multicolor{
         background: #808080;
         color: white;
@@ -235,8 +232,6 @@ export class NavComponent extends LitElement {
         <label for="byname">Search by name
           
               <input id="byname" list="types" @change="${e => this.value = e.target.value}" size="5" type="text" .value=${this.value} placeholder="e.g. Pikachu" minlength="2" autofocus autocomplete="off">
-
-                    
               <datalist class="datalist" id="">
               ${this.allPokemon?.map(
                   (e) => html`<option>${e.data.name}</option>`
@@ -244,7 +239,7 @@ export class NavComponent extends LitElement {
               </datalist>
         </label>
  
-        <img id="but" @click=${this.checkInput} src="https://fontmeme.com/permalink/210615/1525a15545dc148e015d7c55a56971b3.png">
+        <img id="but" @click=${this.checkInput} src="https://github.com/jesuscano80/webcomponent-like-heart/blob/master/Button%20Go.png?raw=true">
         </form>
         <form id="elselect" onSubmit="return false;">
          <label>Search by Pokemon type
