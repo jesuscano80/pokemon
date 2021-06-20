@@ -89,6 +89,7 @@ export class NavComponent extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
+        transform: scale(1.2);
       }
       .formByName > div > button > img {
         width: calc(100% - 10px);
@@ -369,7 +370,7 @@ export class NavComponent extends LitElement {
         </div>
 
         <nav class="nav">
-          <li class="press" id="btnfinder" @click=${this.goHome}><a>Pokemon Finder</a></li>
+          <li class="press pointer" id="btnfinder" @click=${this.goHome}><a>Pokemon Finder</a></li>
           <li class="pointer" id="btnfavourite" @click=${this.toPokeball}><a>My Favourite Pokemon</a></li>
         </nav>
       </section>
@@ -406,6 +407,7 @@ export class NavComponent extends LitElement {
     document.addEventListener("changebtnfavourite", (e)=>{
       this.btnFinderPressedStyle();
       this.showButtons();
+      this.disableAllSelectedButton("cleanallbuttons");
     })
   }
 
@@ -433,10 +435,15 @@ export class NavComponent extends LitElement {
   }
 
   disableAllSelectedButton(param){
+    
     if(param=="cleanallbuttons"){
-      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".tipos")];
+      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".btn")];
+      const svgArrowsDomSelected=[...this.shadowRoot.querySelectorAll("svg")];
       featuresDomSelected.forEach((elem,i)=>{
       elem.classList.remove("press")
+      })
+      svgArrowsDomSelected.forEach((elem)=>{
+        elem.setAttribute("stroke","#FFCC03")
       })
     }
   }
@@ -504,7 +511,7 @@ export class NavComponent extends LitElement {
     if(localStorage.getItem("pokeInside")){
       if (JSON.parse(localStorage.getItem("pokeInside")).length) {
         Router.go("/pokeball");
-        this.disableAllSelectedButton();
+        this.disableAllSelectedButton("cleanallbuttons");
         this.hideButtons();
         this.btnFavouritePressedStyle();
       }

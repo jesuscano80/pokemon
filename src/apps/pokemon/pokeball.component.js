@@ -135,7 +135,7 @@ export class Pokeball extends LitElement{
     }
 
     render(){
-        return this.pokemonsInPokeball?.length>0 ? html `<button class="btn" @click=${this.emptyPokeball}>Empty Pokeball</button><section>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+        return this.pokemonsInPokeball?.length>0 ? html `<button class="btn" @click=${this.emptyPokeball}>Empty Favourites</button><section>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
            
             <article class="card">
                 <div class="bannercolor type-${pokemon.data.id}">
@@ -143,7 +143,8 @@ export class Pokeball extends LitElement{
                 </div>
                 <div class="card-body">
                     <div class="div-image">
-                    <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png"></div>
+                        <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">
+                    </div>
                     <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
                     <div class="divIcon">
                         <img class="icon ${pokemon.data.types[0].type.name}" title="${pokemon.data.types[0].type.name}" alt="Pokemon type ${pokemon.data.types[0].type.name}" src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemon.data.types[0].type.name}.svg">    
