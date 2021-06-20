@@ -1,6 +1,6 @@
 import { Router } from "@vaadin/router";
 import { LitElement, css, html } from "lit";
-import { PokeService } from "./poke.service";
+import { PokeService } from "../services/poke.service";
 
 export class Pokeball extends LitElement{
     
@@ -139,7 +139,7 @@ export class Pokeball extends LitElement{
            
             <article class="card">
                 <div class="bannercolor type-${pokemon.data.id}">
-                    <heart-comp visibility=true></heart-comp>
+                    <heart-comp visibility=""></heart-comp>
                 </div>
                 <div class="card-body">
                     <div class="div-image">

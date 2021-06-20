@@ -1,4 +1,4 @@
-import { PokeAllRepository } from "./poke.repository";
+import { PokeAllRepository } from "../repos/poke.repository";
 
 export class PokeService{
     constructor(){

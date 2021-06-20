@@ -1,6 +1,6 @@
 import { Router } from "@vaadin/router";
 import { LitElement, html, css } from "lit";
-import { PokeService } from "./poke.service";
+import { PokeService } from "../services/poke.service";
 
 
 
@@ -299,9 +299,7 @@ export class PokeComponent extends LitElement{
             const data=JSON.parse(localStorage.getItem("pokeInside"));
             data.forEach((id)=>{
                 let ida=id.toString();
-                console.log(ida);
                 this.shadowRoot.querySelector(`.heart${ida}`).setAttribute("visibility", true);
-                console.log(id);
             })
         }    
     }
@@ -455,19 +453,13 @@ export class PokeComponent extends LitElement{
             })
 
             if(!this.pokeball.includes(id)){
-                console.log("si no está en this.pokeball")
                 this.pokeball.push(id);
                 localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));   
               } 
             else{
-                console.log("si está en pokeball deberia borrarlo")
                 const index=this.pokeball.indexOf(id);
-                console.log(index, this.pokeball);
                 this.pokeball.splice(index,1);
-                console.log("este es el lengh",this.pokeball.length);
                 localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));  
-                console.log("LO HA BORRADO", localStorage.getItem("pokeInside"));
-                
             }
         }
         else{
@@ -495,13 +487,11 @@ export class PokeComponent extends LitElement{
             const data=JSON.parse(localStorage.getItem("pokeInside"));
             data.forEach((elem)=>{
                 if (elem==id){
-                    console.log(`${elem} es igual a ${id}`);
                     control=true;
                 }
             })
         }
         else{
-            console.log("adios",id);
             control=true;
         }
         return control;

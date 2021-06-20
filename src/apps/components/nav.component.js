@@ -449,7 +449,6 @@ export class NavComponent extends LitElement {
   }
   
   eventGenerator(param, param2, param3) {
-    console.log(param3);
     const message = new CustomEvent(param, {
       bubbles: true,
       composed: true,

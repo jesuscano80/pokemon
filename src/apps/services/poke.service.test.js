@@ -2,9 +2,9 @@ import { EVOLUTION_CHAIN } from "../../../fixtures/evolution";
 import { POKEMON20} from "../../../fixtures/first20Pokemon"
 import { POKEMONLISTBASIC } from "../../../fixtures/Pokemon20ListBasic"
 import { SPECIES } from "../../../fixtures/species";
-import { PokeAllRepository } from "./poke.repository"
+import { PokeAllRepository } from "../repos/poke.repository"
 import { PokeService } from "./poke.service";
-jest.mock("./poke.repository");
+jest.mock("../repos/poke.repository");
        
 describe("Test Pokemon service", ()=>{
     beforeEach(()=>{
@@ -50,5 +50,18 @@ describe("Test Pokemon service", ()=>{
         const service= new PokeService();
         const result= await service.getSpeciesData(1);
         expect(result).toBe(SPECIES);
+    })
+
+    test("should get Pokemon list of URL apis",async()=>{
+        PokeAllRepository.mockImplementation(()=>{
+            return{
+                getAllPokemon:()=>{
+                    return POKEMONLISTBASIC
+                }
+            }
+        })
+        const service= new PokeService();
+        const result= await service.getAllPokemon();
+        expect(result).toBe(POKEMONLISTBASIC);
     })
 })

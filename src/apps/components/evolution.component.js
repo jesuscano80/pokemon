@@ -1,5 +1,5 @@
 import { LitElement, css, html } from "lit";
-import { PokeService } from "./poke.service";
+import { PokeService } from "../services/poke.service";
 import { router } from "../../router"
 import { Router } from "@vaadin/router";
 
@@ -153,11 +153,12 @@ export class EvolutionComp extends LitElement{
             progress{
                 appearance: none;
             }
-            ::-webkit-progress-bar {
+            ::-webkit-progress-bar, ::-moz-progress-bar {
                 color: white;
                 background-color: white;
                 border-radius: 7px;
             }
+            
             .bubble{
                 background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(211, 211, 211, 0.8) 100%);
 

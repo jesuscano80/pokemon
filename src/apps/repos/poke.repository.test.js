@@ -1,5 +1,4 @@
 import axios from "axios";
-import { EVOLUTIONPOKEMON } from "../../../fixtures/evolPok";
 import { EVOLUTION_CHAIN } from "../../../fixtures/evolution";
 import { POKEMON20 } from "../../../fixtures/first20Pokemon";
 import { POKEMONLISTBASIC } from "../../../fixtures/Pokemon20ListBasic";
@@ -32,21 +31,26 @@ describe("test pokerepositoryAll",()=>{
         axios.get=jest.fn().mockResolvedValue(EVOLUTION_CHAIN);
         const pokeAllrepo= new PokeAllRepository();
         const pokemonData= await pokeAllrepo.getEvolutionChain(1);
-        expect(EVOLUTION_CHAIN.data.chain.evolves_to[0].species.name).toBe("ivysaur");
+        expect(pokemonData.data.chain.evolves_to[0].species.name).toBe(EVOLUTION_CHAIN.data.chain.evolves_to[0].species.name);
     })
-
-    test("should receive a evolution object", async ()=>{
+    
+    test("should receive evolution chain", async()=>{
+       
+        axios.get=jest.fn().mockResolvedValue(EVOLUTION_CHAIN);
         const pokeAllrepo= new PokeAllRepository();
-        pokeAllrepo.getEvolution=jest.fn().mockResolvedValue(EVOLUTIONPOKEMON);
-        pokeAllrepo.getId=jest.fn().mockResolvedValue(1);
-        const number=  pokeAllrepo.getId("https://pokeapi.co/api/v2/evolution-chain/1/");
-        const objEvolution=await pokeAllrepo.getEvolution(EVOLUTION_CHAIN);
-        expect(objEvolution.data).not.toBe(EVOLUTIONPOKEMON);
+        const pokemonData= await pokeAllrepo.getEvolutionChain(0);
+        expect(pokemonData.data.chain.species.name).toBe("bulbasaur");
     })
-
+    test("should receive evolution chain", async()=>{
+       
+        axios.get=jest.fn().mockResolvedValue(EVOLUTION_CHAIN);
+        const pokeAllrepo= new PokeAllRepository();
+        const pokemonData= await pokeAllrepo.getEvolutionChain(0);
+        expect(pokemonData).toBe(EVOLUTION_CHAIN);
+    })
     test("should receive species data", async ()=>{
+       axios.get=jest.fn().mockResolvedValue(SPECIES);
         const pokeAllrepo= new PokeAllRepository();
-        pokeAllrepo.getSpeciesData=jest.fn().mockResolvedValue(SPECIES);
         const result= await pokeAllrepo.getSpeciesData(1);
         expect(result).toBe(SPECIES);
         
