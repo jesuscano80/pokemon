@@ -1,3 +1,4 @@
+import { Router } from "@vaadin/router";
 import { LitElement, css, html } from "lit";
 import { PokeService } from "./poke.service";
 
@@ -59,7 +60,7 @@ export class Pokeball extends LitElement{
             justify-content:center;
             align-items:center;
             height: 100vh; 
-            width: 140%; 
+            width: 100%; 
             cursor: wait; 
         }
         .bannercolor{
@@ -134,11 +135,11 @@ export class Pokeball extends LitElement{
     }
 
     render(){
-        return this.pokemonsInPokeball?.length>0 ? html `<button class="btn" @click=${this.emptyPokeball}>Empty Pokeball</button>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
-           <section>
+        return this.pokemonsInPokeball?.length>0 ? html `<button class="btn" @click=${this.emptyPokeball}>Empty Pokeball</button><section>${this.pokemonsInPokeball.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;}</style>
+           
             <article class="card">
                 <div class="bannercolor type-${pokemon.data.id}">
-                    <heart-comp></heart-comp>
+                    <heart-comp visibility=true></heart-comp>
                 </div>
                 <div class="card-body">
                     <div class="div-image">
@@ -157,8 +158,8 @@ export class Pokeball extends LitElement{
                     </div> 
                 </div>
             </article>
-        </section>
-        `)}`                       
+        
+        `)}</section>`                       
                           : html `<div class="loading">
                           <img  src="https://fontmeme.com/permalink/210614/37897e1b41de8022cdba4116f7b4c608.png"> 
                       </div>`
@@ -177,6 +178,7 @@ export class Pokeball extends LitElement{
       }
     emptyPokeball(){
         localStorage.removeItem("pokeInside");
+        Router.go("/");
     }
 }
 

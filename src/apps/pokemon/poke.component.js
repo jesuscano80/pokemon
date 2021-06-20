@@ -252,8 +252,7 @@ export class PokeComponent extends LitElement{
             ? html`${this.pokemonRender && this.pokemonRender.map((pokemon)=> html`<style>.type-${pokemon.data.id}{background:var(--color-${pokemon.data.types[0].type.name})!important;z-index:2}</style>
                 <article class="card">
                     <div class="bannercolor type-${pokemon.data.id}">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/768px-Pok%C3%A9_Ball_icon.svg.png" class="pokeball pokeball-${pokemon.data.id}" >
-                        <heart-comp @click=${()=>this.toPokeball(pokemon.data.id)}></heart-comp>
+                        <heart-comp class="heart${pokemon.data.id}" @click=${()=>this.toPokeball(pokemon.data.id)}></heart-comp>
                     </div>
                     <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
                         <div class="div-image">
@@ -290,7 +289,22 @@ export class PokeComponent extends LitElement{
         this.renderComplete=true;
     }
 
-    
+    updated(){
+        this.changeHeartsInit();
+    }
+
+    changeHeartsInit(){
+        
+        if (localStorage.getItem("pokeInside")){
+            const data=JSON.parse(localStorage.getItem("pokeInside"));
+            data.forEach((id)=>{
+                let ida=id.toString();
+                console.log(ida);
+                this.shadowRoot.querySelector(`.heart${ida}`).setAttribute("visibility", true);
+                console.log(id);
+            })
+        }    
+    }
 
     sendTypesToNav(){
         this.dataTypesFiltered=this.pokemonRender.filter((elem,i,a)=>a.findIndex(t=>t.data.types[0].type.name === elem.data.types[0].type.name)===i);
@@ -466,6 +480,12 @@ export class PokeComponent extends LitElement{
     toPokeball(id){
         this.pushToLocalStorage(id);
         this.heartvalue=this.checkHeart(id);
+        if(this.heartvalue){
+            this.shadowRoot.querySelector(`.heart${id}`).setAttribute("visibility", true);
+        }
+        else{
+            this.shadowRoot.querySelector(`.heart${id}`).removeAttribute("visibility");
+        }
         return this.pokemonInsidePokeball= this.pokemonRender.filter((elem)=> this.pokeball.includes(elem.data.id));   
     }
 

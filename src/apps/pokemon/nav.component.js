@@ -360,9 +360,8 @@ export class NavComponent extends LitElement {
 
         <nav class="nav">
           <li><a>Buscador de pokemons</a></li>
-          <li><a>Mis pokemons favoritos</a></li>
+          <li @click=${this.toPokeball}><a>Mis pokemons favoritos</a></li>
         </nav>
-
       </section>
     `;
   }
@@ -398,7 +397,7 @@ export class NavComponent extends LitElement {
 
   changeSelectedButton(number){
     if(number){
-      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".tipos")];
+      const featuresDomSelected=[...this.shadowRoot.querySelectorAll(".btn")];
       const svgArrowsDomSelected=[...this.shadowRoot.querySelectorAll("svg")];
       featuresDomSelected.forEach((elem,i)=>{
         if(i==number){
@@ -463,14 +462,14 @@ export class NavComponent extends LitElement {
   }
 
   hideButtons(){
-    const container=this.shadowRoot.querySelector(".container");
+    const container=this.shadowRoot.querySelector(".bttns");
     const select=this.shadowRoot.querySelector("#elselect");
     select.classList.add("hidden");
     container.classList.add("hidden");
   }
 
   showButtons(){
-    const container=this.shadowRoot.querySelector(".container");
+    const container=this.shadowRoot.querySelector(".bttns");
     const select=this.shadowRoot.querySelector("#elselect");
     select.classList.remove("hidden");
     container.classList.remove("hidden");
