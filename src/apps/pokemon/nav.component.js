@@ -167,10 +167,17 @@ export class NavComponent extends LitElement {
         align-items: center;
         border-radius: var(--radius-m);
         margin-top: 10px;
+        cursor: pointer;
       }
       .nav {
         display: flex;
         flex-direction: column;
+      }
+      .pointer{
+        cursor: pointer;
+      }
+      .whitefont{
+        color: #FFFFFF;
       }
       .nav > li{
         list-style: none;
@@ -195,11 +202,14 @@ export class NavComponent extends LitElement {
         display: none;
       }
       .press{
-        background-color: #FFCC03;
+        background-color: #FFCC03!important;
       }
       #types{
         overflow:hidden;
         height:0.5em;
+      }
+      .alert{
+        background-color: red!important;
       }
 
 
@@ -288,7 +298,7 @@ export class NavComponent extends LitElement {
 
         <form id="elselect" onSubmit="return false;" class="formByPokemonType">
           <label>Search by Pokemon type</label>
-          <select @change="${(e) => this.eventGenerator(e.target.value, e, "cleanallbuttons")}">
+          <select class="pointer" @change="${(e) => this.eventGenerator(e.target.value, e, "cleanallbuttons")}">
           <option class="choseOneOption" selected>choose one</option>
           <option class="allTypesOption">all types</option>
             ${this.datatypes?.map(
@@ -312,7 +322,7 @@ export class NavComponent extends LitElement {
                   (e) => html`<option>${e.data.name}</option>`
                 )}
             </datalist>
-            <button>
+            <button class="pointer">
               <img id="but" @click=${this.checkInput} src="https://raw.githubusercontent.com/jesuscano80/webcomponent-like-heart/master/go.png">
             </button>
           </div>
@@ -359,8 +369,8 @@ export class NavComponent extends LitElement {
         </div>
 
         <nav class="nav">
-          <li><a>Buscador de pokemons</a></li>
-          <li @click=${this.toPokeball}><a>Mis pokemons favoritos</a></li>
+          <li class="press" id="btnfinder" @click=${this.goHome}><a>Pokemon Finder</a></li>
+          <li class="pointer" id="btnfavourite" @click=${this.toPokeball}><a>My Favourite Pokemon</a></li>
         </nav>
       </section>
     `;
@@ -393,6 +403,10 @@ export class NavComponent extends LitElement {
     document.addEventListener("showButtons",(e)=>{
       this.showButtons();
     });
+    document.addEventListener("changebtnfavourite", (e)=>{
+      this.btnFinderPressedStyle();
+      this.showButtons();
+    })
   }
 
   changeSelectedButton(number){
@@ -459,6 +473,16 @@ export class NavComponent extends LitElement {
   goHome(){
       Router.go("/");
       this.showButtons();
+      this.btnFinderPressedStyle()
+  }
+  btnFinderPressedStyle(){
+    this.shadowRoot.querySelector("#btnfavourite").classList.remove("press");
+    this.shadowRoot.querySelector("#btnfinder").classList.add("press");
+  }
+
+  btnFavouritePressedStyle(){
+    this.shadowRoot.querySelector("#btnfavourite").classList.add("press");
+    this.shadowRoot.querySelector("#btnfinder").classList.remove("press");
   }
 
   hideButtons(){
@@ -476,11 +500,26 @@ export class NavComponent extends LitElement {
   }
 
   toPokeball(){
-    if(localStorage.getItem("pokeInside")){ 
+    
+    if(localStorage.getItem("pokeInside")){
+      if (JSON.parse(localStorage.getItem("pokeInside")).length) {
         Router.go("/pokeball");
+        this.disableAllSelectedButton();
         this.hideButtons();
+        this.btnFavouritePressedStyle();
       }
-  
+    }
+    else{
+       setTimeout(()=>{
+         const buttonfavourite=this.shadowRoot.querySelector("#btnfavourite")
+         buttonfavourite.classList.remove("alert");
+         buttonfavourite.classList.add("whitefont");
+         buttonfavourite.innerHTML="Favourite Pokemon"
+       }, 2000)
+       const alertbutton=this.shadowRoot.querySelector("#btnfavourite")
+       alertbutton.classList.add("alert");
+       alertbutton.innerHTML="not found";
+    }  
   }
   
 }

@@ -179,7 +179,19 @@ export class Pokeball extends LitElement{
     emptyPokeball(){
         localStorage.removeItem("pokeInside");
         Router.go("/");
+        this.eventGenerator("changebtnfavourite")
     }
+    eventGenerator(param) {
+        const message = new CustomEvent(param, {
+          bubbles: true,
+          composed: true,
+          detail: {
+            msg: param
+          },
+        });
+        this.dispatchEvent(message);
+       
+      }
 }
 
 window.customElements.define("pokeball-comp", Pokeball);

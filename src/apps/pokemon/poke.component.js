@@ -464,7 +464,7 @@ export class PokeComponent extends LitElement{
                 const index=this.pokeball.indexOf(id);
                 console.log(index, this.pokeball);
                 this.pokeball.splice(index,1);
-                console.log(this.pokeball);
+                console.log("este es el lengh",this.pokeball.length);
                 localStorage.setItem("pokeInside", JSON.stringify(this.pokeball));  
                 console.log("LO HA BORRADO", localStorage.getItem("pokeInside"));
                 
