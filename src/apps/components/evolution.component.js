@@ -153,10 +153,15 @@ export class EvolutionComp extends LitElement{
             progress{
                 appearance: none;
             }
-            ::-webkit-progress-bar, ::-moz-progress-bar {
+            ::-webkit-progress-bar  {
                 color: white;
                 background-color: white;
                 border-radius: 7px;
+            }
+            ::-moz-progress-bar{
+                border-radius: 7px;
+                color: white;
+                background-color: white;
             }
             
             .bubble{

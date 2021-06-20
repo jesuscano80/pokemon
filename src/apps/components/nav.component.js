@@ -169,6 +169,11 @@ export class NavComponent extends LitElement {
         border-radius: var(--radius-m);
         margin-top: 10px;
         cursor: pointer;
+        transition: 0.3s;
+        opacity: 1;
+      }
+      .btn:hover{
+        opacity:0.6;
       }
       .nav {
         display: flex;

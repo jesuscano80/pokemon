@@ -5,8 +5,8 @@
       =>  Here you can see all cards with images and Pokemon data, you can filter Pokemon by type and features and you can search Pokemon by name.
   - ## Has an evolution zone 
       => You can click in each Pokemon image and it will show you evolution phases of each one.
-  - ## Add to Pokeball 
-      => Each card has a mini pokeball image, if you click on it, you will catch this pokemon, and you can what is inside the pokeball, clicking on the big pokeball on the left navbar.
+  - ## Add to favourites
+      => Each card has a LIKE?, if you click on it, you will add to your favourite pokemon section, that you can visit and empty.
    
  
   
@@ -21,7 +21,7 @@ Navigate to `http://localhost:8080/`. The app will automatically reload if you c
 
 ## Container
 
-Run `docker-compose up --build -d` for load it in a docker container.
+Run `docker-compose up --build -d` for load it in a docker container, it will render on port 80.
 
 <br><br>
 
