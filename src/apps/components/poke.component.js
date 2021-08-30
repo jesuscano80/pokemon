@@ -257,7 +257,7 @@ export class PokeComponent extends LitElement{
                     <div class="card-body" @click=${()=>this.sendTo(pokemon.data.id)}>
                         <div class="div-image">
                             <img class="card-image image-flying-${pokemon.data.id}"
-                             src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">
+                             src="${pokemon.data.sprites.front_default}">
                         </div>
                             <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
                             <div class="divIcon">
@@ -284,6 +284,7 @@ export class PokeComponent extends LitElement{
     async connectedCallback(){
         super.connectedCallback();
         this.pokemonRender=await this.service.get20Pokemon();
+        console.log(this.pokemonRender);
         this.pokemonCopy=this.pokemonRender;
         this.sendTypesToNav();    
         this.renderComplete=true;

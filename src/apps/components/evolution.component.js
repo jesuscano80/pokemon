@@ -189,7 +189,7 @@ export class EvolutionComp extends LitElement{
                             <div class="evl">
                                 <p>${this.capitalize(evol.name)}</p>
                                 <div class="img ${evol.name}" >
-                                    <img class="image" src="https://pokeres.bastionbot.org/images/pokemon/${evol.id}.png">
+                                    <img class="image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evol.id}.png">
                                 </div>
                             </div>
                             <div class="arrow">
@@ -249,6 +249,7 @@ export class EvolutionComp extends LitElement{
         const chain= await this.service.getEvolutionChain(idEvolution);
         const data=await this.getEvolution(chain);
         this.evolutions=data;
+        console.log(this.evolutions);
         this.eventGenerator("sendEvolution", this.evolutions);
     }
     chooseBubble(){

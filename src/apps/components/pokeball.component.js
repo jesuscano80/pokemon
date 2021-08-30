@@ -143,7 +143,7 @@ export class Pokeball extends LitElement{
                 </div>
                 <div class="card-body">
                     <div class="div-image">
-                        <img class="card-image image-flying-${pokemon.data.id}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.data.id}.png">
+                        <img class="card-image image-flying-${pokemon.data.id}" src="${pokemon.data.sprites.front_default}">
                     </div>
                     <p class="pokemon-name" id="${pokemon.data.id}" >${this.capitalize(pokemon.data.name)}</p>
                     <div class="divIcon">
